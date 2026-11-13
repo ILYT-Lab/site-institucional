@@ -1,0 +1,7 @@
+# textos sempre com LF (scripts .sh e configs do Nginx/Docker quebram com CRLF)
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.webp binary
+*.avif binary
+*.woff2 binary
