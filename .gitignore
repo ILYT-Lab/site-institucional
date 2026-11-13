@@ -10,3 +10,14 @@ demos/_shots/*.png
 *.log
 .DS_Store
 Thumbs.db
+
+# editores e configurações locais
+.vscode/
+.idea/
+.claude/settings.local.json
+
+# material de antes da implementação (fica só no disco): design system v1 e textos/listas do protótipo
+design-system/
+docs/textos-home.md
+docs/imagens.md
+docs/politica-de-privacidade.md
