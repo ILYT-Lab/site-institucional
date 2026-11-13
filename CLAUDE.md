@@ -16,7 +16,7 @@ Site institucional da ILYT (software sob medida para PMEs, Belo Horizonte/MG). A
 - `src/styles/global.css`: tokens do design system, base e peças compartilhadas (botões, eyebrow, sec-head).
 - `src/scripts/`: `main.ts` inicia tudo; `motion.ts` (GSAP + Lenis) carrega só no primeiro gesto.
 - `demos/`: demos do portfólio (Fluxo, Chave, Ritmo, Verbo, Clique, Movimento) e scripts de mockup em `demos/_shots`.
-- `brand/provisorio/`: logo e favicon provisórios (redesenho da logo atual). Trocar pela oficial mantendo os nomes.
+- `brand/provisorio/`: logo e favicon em SVG vetorizados da logo original (`brand/logo-ilyt-preto-fundo-branco.jpg`), só a face, sem o relevo. Usados em `Logo.astro`, `public/favicon.svg` e `scripts/og.html`.
 
 ## Regras
 - **Desempenho é promessa do site (90+ no PageSpeed).** Medir com Lighthouse no celular depois de qualquer mudança visual ou de script. Estado atual: celular 97, desktop 100, demais categorias 100.
