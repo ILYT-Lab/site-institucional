@@ -1,0 +1,45 @@
+---
+// <picture> com imagem diferente no celular (direção de arte), em AVIF e WebP, em vários tamanhos.
+// O build gera os arquivos otimizados; o navegador baixa só o que precisa.
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+
+interface Props {
+  src: ImageMetadata;
+  mobile?: ImageMetadata;
+  media?: string; // quando usar a versão mobile
+  widths: number[];
+  mobileWidths?: number[];
+  sizes?: string;
+  alt?: string;
+  class?: string;
+  style?: string;
+  priority?: boolean; // imagem da primeira tela: carrega antes de tudo
+  mobileQuality?: number; // qualidade AVIF da versão mobile (imagens escurecidas aguentam menos)
+}
+
+const { src, mobile, media = '(max-width: 600px)', widths, mobileWidths = [480, 768, 1080], sizes = '100vw', alt = '', class: cls, style, priority = false, mobileQuality } = Astro.props;
+
+const set = async (img: ImageMetadata, w: number[], format: 'avif' | 'webp', q?: number) =>
+  (await getImage({ src: img, widths: w.filter((x) => x <= img.width), format, quality: q ?? (format === 'avif' ? 55 : 72) })).srcSet.attribute;
+
+const formats = ['avif', 'webp'] as const;
+const mobileSets = mobile ? await Promise.all(formats.map((f) => set(mobile, mobileWidths, f, f === 'avif' ? mobileQuality : undefined))) : [];
+const desktopSets = await Promise.all(formats.map((f) => set(src, widths, f)));
+const fallback = await getImage({ src, width: Math.min(widths[Math.floor(widths.length / 2)], src.width), format: 'jpg', quality: 76 });
+---
+<picture>
+  {mobile && formats.map((f, i) => <source media={media} type={`image/${f}`} srcset={mobileSets[i]} sizes={sizes} />)}
+  {formats.map((f, i) => <source type={`image/${f}`} srcset={desktopSets[i]} sizes={sizes} />)}
+  <img
+    src={fallback.src}
+    width={src.width}
+    height={src.height}
+    alt={alt}
+    class={cls}
+    style={style}
+    decoding="async"
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : 'auto'}
+  />
+</picture>

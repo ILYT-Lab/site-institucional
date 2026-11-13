@@ -1,0 +1,19 @@
+<!-- @dsCard group="Ações" height=180 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.screen{position:relative;height:150px;margin:16px 24px;border:1px dashed var(--line);border-radius:var(--radius-piece)}
+.fab{position:absolute;right:16px;bottom:16px;display:flex;align-items:center;gap:10px;background:var(--amber);color:var(--on-amber);text-decoration:none;font:600 15px/1 var(--font-sans);padding:12px 18px 12px 12px;border-radius:var(--radius-piece);box-shadow:var(--shadow-piece);transition:transform var(--dur-base) var(--ease-snap)}
+.fab:hover{transform:translateY(-3px)}
+.fab svg{width:28px;height:28px;flex:none}
+.fab svg path{fill:none;stroke:var(--on-amber);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fab.compact{right:auto;left:16px;padding:14px;border-radius:var(--radius-md)}
+.fab.compact span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.hint{position:absolute;left:16px;top:14px;font:400 13px/1.4 var(--font-sans);color:var(--ink-muted)}
+</style>
+<div class="screen">
+  <span class="hint">Desktop: com texto. Celular: só o ícone (esquerda).</span>
+  <a class="fab compact" href="#"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 23l1.6-4.6A9.5 9.5 0 1 1 10 21.8L5 23z"/><path d="M11 10.5c0 3.5 3 6.5 6.5 6.5l1.2-1.6-2.2-1.2-1 .9c-1-.4-1.9-1.3-2.3-2.3l.9-1-1.2-2.2-1.9 1z"/></svg><span>Falar no WhatsApp</span></a>
+  <a class="fab" href="#"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 23l1.6-4.6A9.5 9.5 0 1 1 10 21.8L5 23z"/><path d="M11 10.5c0 3.5 3 6.5 6.5 6.5l1.2-1.6-2.2-1.2-1 .9c-1-.4-1.9-1.3-2.3-2.3l.9-1-1.2-2.2-1.9 1z"/></svg>Falar no WhatsApp</a>
+</div>

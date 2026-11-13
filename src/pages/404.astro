@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import WhatsAppButton from '../components/ui/WhatsAppButton.astro';
+---
+<Base title="Página não encontrada | ILYT" description="Esta página não existe ou mudou de endereço." noindex>
+  <section class="nf wrap">
+    <p class="eyebrow">Erro 404</p>
+    <h1>Essa página <span class="thin">não existe.</span></h1>
+    <p class="lead">O endereço pode ter mudado ou estar com algum erro de digitação.</p>
+    <div class="ctas"><a class="btn btn-primary" href="/">Voltar para o início</a><WhatsAppButton from="404" class="btn btn-ghost" label="Falar no WhatsApp" /></div>
+  </section>
+</Base>
+
+<style is:global>
+  .nf { min-height: 80svh; display: grid; align-content: center; gap: 24px; padding-top: 140px; padding-bottom: 80px; }
+  .nf h1 { font-size: clamp(36px, 5vw, 64px); line-height: 1; letter-spacing: -.04em; font-weight: 600; }
+</style>

@@ -1,0 +1,83 @@
+---
+import ArtPicture from '../ui/ArtPicture.astro';
+import WhatsAppButton from '../ui/WhatsAppButton.astro';
+import hero from '../../assets/img/hero.jpg';
+import heroMobile from '../../assets/img/hero-mobile.jpg';
+
+// título palavra por palavra: cada uma entra com um pequeno atraso (animação em CSS, não depende de JavaScript)
+const line1 = ['A', 'tecnologia', 'que', 'a', 'sua', 'empresa', 'precisa,'];
+const line2 = ['com', 'foco', 'no', 'resultado', 'que'];
+const word = (i: number) => `--i:${i};--y:${34 + (i % 3) * 12}px;--r:${i % 2 ? 3 : -3}deg`;
+---
+<section class="hero" id="hero">
+  <div class="ph fill">
+    <ArtPicture src={hero} mobile={heroMobile} widths={[960, 1440, 1920, 2752]} mobileWidths={[480, 640, 840, 1080, 1536]} mobileQuality={42} class="hero-img" priority />
+  </div>
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <h1 id="h1">
+        <span class="ln">{line1.map((w, i) => <><span class="w thin" style={word(i)}>{w}</span>{' '}</>)}</span>
+        <span class="ln">{line2.map((w, i) => <><span class="w" style={word(line1.length + i)}>{w}</span>{' '}</>)}<span class="w amb kw" id="kw">o seu bolso exige.</span></span>
+      </h1>
+      <div class="hero-foot">
+        <p class="lead">A ILYT desenvolve sites, sistemas e automações sob medida para a sua empresa, sem ferramentas desnecessárias nem gastos sem propósito. Em até 48 horas, você recebe uma proposta clara, com o que será feito, os prazos e o investimento.</p>
+        <div>
+          <div class="ctas hero-ctas">
+            <div class="cta-main"><WhatsAppButton from="hero" /><p class="micro">Respondemos em até 24 horas</p></div>
+            <a class="btn btn-ghost" href="#projetos">Ver projetos →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .hero { position: relative; overflow: hidden; /* a imagem com parallax não invade a próxima seção */ min-height: clamp(660px, 94svh, 1000px); display: flex; align-items: flex-end; isolation: isolate; padding-top: calc(env(safe-area-inset-top, 0px) + 112px); }
+  .hero-img { object-position: 78% 40%; }
+  .hero .ph.fill::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 10, 11, .92) 0%, rgba(10, 10, 11, .65) 30%, rgba(10, 10, 11, .3) 60%), linear-gradient(0deg, #0a0a0b 0%, rgba(10, 10, 11, .9) 18%, rgba(10, 10, 11, .55) 42%, rgba(10, 10, 11, .18) 62%, rgba(10, 10, 11, .42) 82%, rgba(10, 10, 11, .72) 100%); }
+  .hero-in { position: relative; z-index: 3; width: 100%; padding-block: 0 88px; }
+  .hero h1 { font-size: clamp(30px, 3vw, 48px); line-height: 1; letter-spacing: -.045em; font-weight: 600; margin: 24px 0 0; width: 0; min-width: 100%; }
+  /* o título ocupa a largura do subtítulo: o bloco se ajusta ao parágrafo e o h1 não acrescenta largura */
+  .hero-copy { width: fit-content; max-width: 100%; }
+  .hero h1 .w { display: inline-block; }
+  .hero h1 .ln { display: flex; flex-wrap: wrap; column-gap: .34em; }
+  .hero h1 .ln + .ln { margin-top: .12em; }
+  .hero h1 .thin { font-weight: 300; color: #cfcfd4; }
+  .hero-foot { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; margin-top: 36px; }
+  .hero-ctas { align-items: flex-start; }
+  .cta-main { display: inline-grid; }
+  .cta-main .btn { justify-content: center; padding-inline: 32px; }
+  .cta-main .micro { text-align: center; }
+
+  /* entrada: palavras sobem uma a uma; "o seu bolso exige." chega por último, trazida pelo cursor */
+  .hero h1 .w { animation: hero-word .65s cubic-bezier(.34, 1.56, .64, 1) both; animation-delay: calc(.45s + var(--i) * .05s); }
+  .hero h1 .kw { animation: hero-kw .9s cubic-bezier(.16, 1, .3, 1) 1.1s both; }
+  .hero-foot > * { animation: hero-up .8s cubic-bezier(.16, 1, .3, 1) both; animation-delay: 1.7s; }
+  .hero-foot > * + * { animation-delay: 1.8s; }
+  @keyframes hero-word { from { opacity: 0; transform: translateY(var(--y)) rotate(var(--r)); } }
+  @keyframes hero-kw { from { opacity: 0; transform: translate(260px, -180px) rotate(6deg); } }
+  @keyframes hero-up { from { opacity: 0; transform: translateY(18px); } }
+
+  .cursor { position: absolute; left: 0; top: 0; display: flex; gap: 2px; pointer-events: none; z-index: 5; opacity: 0; }
+  .cursor svg { width: 18px; height: 18px; flex: none; }
+  .cursor path { fill: var(--amber); stroke: #0a0a0b; stroke-width: 1.5; }
+  .cursor span { margin-top: 14px; background: var(--amber); color: var(--on-amber); font: 500 11px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; padding: 5px 8px; border-radius: 999px; white-space: nowrap; }
+
+  @media (min-width: 1001px) {
+    .hero .ph.fill::after { background: linear-gradient(90deg, rgba(10, 10, 11, .92) 0%, rgba(10, 10, 11, .55) 30%, rgba(10, 10, 11, .03) 60%), linear-gradient(0deg, #0a0a0b 0%, rgba(10, 10, 11, .9) 18%, rgba(10, 10, 11, .55) 42%, rgba(10, 10, 11, .18) 62%, rgba(10, 10, 11, .42) 82%, rgba(10, 10, 11, .72) 100%); }
+  }
+  @media (max-width: 1000px) {
+    /* o título corre em sequência: a parte em negrito continua na mesma linha de "precisa," */
+    .hero h1 { display: flex; flex-wrap: wrap; column-gap: .34em; }
+    .hero h1 .ln { display: contents; }
+  }
+  @media (max-width: 600px) {
+    .hero-img { object-position: 50% 50%; }
+    .hero-in { padding-block: 0 56px; }
+    .hero h1 { font-size: clamp(31px, calc(9.4vw - 1px), 39px); }
+    .cta-main { display: contents; }
+    .hero-ctas { align-items: stretch; }
+    .cta-main .micro { order: 3; margin-top: 2px; }
+  }
+</style>

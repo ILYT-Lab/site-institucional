@@ -1,0 +1,88 @@
+<!-- @dsCard group="Motion" height=420 subtitle="O logo se monta peça por peça, carregado por cursores" -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600&family=Onest:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-sans); }
+  .stage { position: relative; padding: 24px; display: grid; gap: 16px; }
+  .logo { position: relative; width: 100%; max-width: 720px; aspect-ratio: 2000 / 1120; margin: 0 auto; overflow: visible; }
+  .logo img { position: absolute; inset: 0; width: 100%; height: 100%; will-change: transform, opacity; }
+  /* screen/multiply removem o fundo do JPG para as peças assentarem em qualquer fundo */
+  .v-dark { mix-blend-mode: screen; }
+  .v-light { display: none; mix-blend-mode: multiply; }
+  [data-theme="light"] .v-dark { display: none; }
+  [data-theme="light"] .v-light { display: block; }
+  .cursor { position: absolute; left: 0; top: 0; display: flex; align-items: flex-start; gap: 2px; opacity: 0; pointer-events: none; z-index: 5; }
+  .cursor svg { width: 18px; height: 18px; }
+  .cursor svg path { fill: var(--amber); stroke: var(--bg); stroke-width: 1.5; }
+  .cursor span { margin-top: 14px; background: var(--amber); color: var(--on-amber); font: 500 11px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; padding: 5px 8px; border-radius: 999px; white-space: nowrap; }
+  .bar { display: flex; justify-content: center; gap: 12px; align-items: center; }
+  button { font: 600 14px/1 var(--font-sans); background: transparent; color: var(--ink); border: 1px solid var(--line-strong); border-radius: 12px; padding: 10px 16px; cursor: pointer; }
+  button:hover { background: var(--surface-raised); }
+  button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .note { font: 500 11px/1.4 var(--font-mono); letter-spacing: .08em; color: var(--ink-muted); text-transform: uppercase; }
+</style>
+<div class="stage">
+  <div class="logo" id="logo" aria-label="Logo ILYT" role="img"></div>
+  <div class="bar"><button id="replay" type="button">Montar de novo</button><span class="note">ease-snap · 700ms por peça</span></div>
+</div>
+<script>
+(() => {
+  const SRC = { dark: '/_blob/7065e7fa46a1e9cdf4270d0d5cf4432f', light: '/_blob/c571db795b59381b548942ccf0947c2a' };
+  // Recortes das 6 peças reais do logo (coordenadas em % da imagem 2000x1120)
+  const pieces = [
+    { id: 'I',  clip: '7.5% 24.1%,16% 24.1%,16% 79.5%,7.5% 79.5%', c: [11.7, 52], from: [-30, 40, -14] },
+    { id: 'L',  clip: '16.5% 24.1%,25% 24.1%,25% 65.6%,43.5% 65.6%,43.5% 79.5%,16.5% 79.5%', c: [27, 70], from: [-18, 70, 10] },
+    { id: 'Y1', clip: '31.5% 24.1%,39.5% 24.1%,39.5% 39.7%,47.1% 47.8%,47.1% 48.2%,43.85% 57.9%,31.5% 50%', c: [38, 38], from: [-6, -70, -18] },
+    { id: 'Y2', clip: '47.1% 48.2%,57% 24.1%,65% 24.1%,65% 79.5%,44.25% 79.5%,43.85% 57.9%', c: [55, 62], from: [14, 80, 12] },
+    { id: 'T1', clip: '65.5% 24.1%,96.25% 24.1%,96.25% 37.9%,65.5% 37.9%', c: [80, 31], from: [30, -60, 8] },
+    { id: 'T2', clip: '76.5% 39.3%,85% 39.3%,85% 79.5%,76.5% 79.5%', c: [80.7, 60], from: [34, 50, -16] }
+  ];
+  const labels = ['design', 'código', 'dados'];
+  const logo = document.getElementById('logo');
+  const els = pieces.map(p => {
+    const frag = document.createDocumentFragment();
+    ['dark', 'light'].forEach(t => {
+      const img = document.createElement('img');
+      img.src = SRC[t]; img.alt = ''; img.className = 'v-' + t;
+      img.style.clipPath = `polygon(${p.clip})`;
+      frag.appendChild(img);
+    });
+    logo.appendChild(frag);
+    return [...logo.querySelectorAll('img')].slice(-2);
+  });
+  const cursors = labels.map(l => {
+    const c = document.createElement('div');
+    c.className = 'cursor';
+    c.innerHTML = '<svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 1.5 L15 8.5 L9 10 L6.5 16 Z"/></svg><span>' + l + '</span>';
+    logo.appendChild(c);
+    return c;
+  });
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const EASE = 'cubic-bezier(0.2, 0.9, 0.2, 1.15)';
+  let running = [];
+  function play() {
+    running.forEach(a => a.cancel()); running = [];
+    if (reduce) return;
+    const w = logo.clientWidth, h = logo.clientHeight;
+    pieces.forEach((p, i) => {
+      const delay = 150 + i * 260, dur = 700;
+      const [dxp, dyp, rot] = p.from;
+      const dx = dxp / 100 * w, dy = dyp / 100 * h;
+      els[i].forEach(img => running.push(img.animate([
+        { transform: `translate(${dx}px, ${dy}px) rotate(${rot}deg)`, opacity: 0 },
+        { opacity: 1, offset: 0.25 },
+        { transform: 'none', opacity: 1 }
+      ], { duration: dur, delay, easing: EASE, fill: 'backwards' })));
+      const cur = cursors[i % cursors.length];
+      const tx = p.c[0] / 100 * w, ty = p.c[1] / 100 * h;
+      running.push(cur.animate([
+        { transform: `translate(${tx + dx}px, ${ty + dy}px)`, opacity: 0 },
+        { opacity: 1, offset: 0.2 },
+        { transform: `translate(${tx}px, ${ty}px)`, opacity: 1, offset: 0.85 },
+        { transform: `translate(${tx + 10}px, ${ty + 14}px)`, opacity: 0 }
+      ], { duration: dur + 260, delay, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'both' }));
+    });
+  }
+  document.getElementById('replay').addEventListener('click', play);
+  requestAnimationFrame(play);
+})();
+</script>

@@ -1,0 +1,86 @@
+---
+// Duas abas (sistemas / sites); cada card abre um modal com a imagem grande. Script: src/scripts/projects.ts
+import { Picture } from 'astro:assets';
+import { sistemas, sites, type Projeto } from '../../content/projetos';
+
+const grids: { id: string; tab: string; label: string; items: Projeto[] }[] = [
+  { id: 'grid-sis', tab: 'tab-sis', label: 'Sistemas e aplicativos', items: sistemas },
+  { id: 'grid-sites', tab: 'tab-sites', label: 'Sites e landing pages', items: sites },
+];
+---
+<section class="band flush" id="projetos">
+  <div class="wrap">
+    <div class="proj-head">
+      <div><p class="eyebrow">Portfólio</p><h2>Projetos</h2></div>
+      <div class="tabs" role="tablist" aria-label="Tipo de projeto">
+        {grids.map((g, i) => (
+          <button type="button" role="tab" id={g.tab} aria-selected={i === 0 ? 'true' : 'false'} aria-controls={g.id} tabindex={i === 0 ? 0 : -1}>{g.label}</button>
+        ))}
+      </div>
+    </div>
+    {grids.map((g, i) => (
+      <div class="pgrid" id={g.id} role="tabpanel" aria-labelledby={g.tab} hidden={i !== 0}>
+        {g.items.map((p) => (
+          <article class="pcard" data-title={p.nome} data-type={p.tipo} data-desc={p.descricao} data-url={p.url}>
+            <span class="ph">
+              <Picture src={p.imagem} formats={['avif', 'webp']} fallbackFormat="jpg" widths={[480, 800, 1200, 1600]} sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 400px" alt={`${p.nome}: ${p.tipo.toLowerCase()}, telas no computador e no celular`} loading="lazy" quality={70} />
+            </span>
+            <span class="pmeta">{p.tipo}</span>
+            <h3><button class="pcard-btn" type="button" aria-haspopup="dialog">{p.nome}</button></h3>
+            <span class="more" aria-hidden="true">Ver detalhes →</span>
+          </article>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>
+
+<dialog class="pmodal" id="pmodal" aria-labelledby="pmTitle">
+  <div class="pm-in">
+    <div class="pm-top"><div><span class="pmeta" id="pmType"></span><h3 id="pmTitle"></h3></div><button class="pm-close" type="button" id="pmClose" aria-label="Fechar">×</button></div>
+    <div class="ph shot" id="pmShot"></div>
+    <p class="pm-note" id="pmDesc"></p>
+    <div class="pm-actions" id="pmActions" hidden><a class="btn btn-primary" id="pmLink" href="#" target="_blank" rel="noopener">Ver online ↗</a></div>
+  </div>
+</dialog>
+
+<style is:global>
+  .proj-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
+  .proj-head h2 { margin-top: 18px; }
+  .tabs { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; }
+  .tabs button { font: 500 14px/1 var(--font-sans); color: var(--ink-muted); background: none; border: 0; padding: 13px 18px; border-radius: 999px; cursor: pointer; }
+  .tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+  .pgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 24px; }
+  .pgrid[hidden] { display: none; }
+  .pcard { position: relative; display: flex; flex-direction: column; gap: 14px; cursor: pointer; }
+  /* o botão do título cobre o card inteiro: um clique em qualquer parte abre o modal */
+  .pcard-btn { all: unset; cursor: pointer; }
+  .pcard-btn::after { content: ""; position: absolute; inset: 0; border-radius: var(--r-piece); }
+  .pcard-btn:focus-visible { outline: none; }
+  .pcard:has(.pcard-btn:focus-visible) .ph { outline: 2px solid var(--focus); outline-offset: 3px; }
+  .pcard .ph { display: block; aspect-ratio: 16 / 10; width: 100%; border-radius: var(--r-piece); border: 1px solid var(--line); transition: transform .32s cubic-bezier(.2, .9, .2, 1.15), border-color .2s; }
+  .pcard:hover .ph { transform: translateY(-4px); border-color: var(--line-strong); }
+  .pcard .ph img { transform: scale(1.06); transition: transform .5s cubic-bezier(.2, .9, .2, 1); }
+  .pcard:hover .ph img { transform: scale(1.1); }
+  .pmeta { font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); }
+  .pcard h3 { font: 500 20px/1.3 var(--font-display); letter-spacing: -.01em; }
+  .pcard .more { color: var(--amber); font-weight: 600; font-size: 14px; }
+  .pmodal { width: min(760px, calc(100vw - 32px)); max-height: calc(100svh - 48px); border: 1px solid var(--line); border-radius: var(--r-big); background: var(--surface); color: var(--ink); padding: 0; }
+  .pmodal::backdrop { background: rgba(0, 0, 0, .72); backdrop-filter: blur(4px); }
+  .pm-in { padding: 28px; display: grid; gap: 18px; }
+  .pm-top { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+  .pm-top h3 { font: 600 clamp(22px, 2.4vw, 30px)/1.15 var(--font-display); letter-spacing: -.02em; margin-top: 8px; }
+  .pm-close { flex: none; width: 44px; height: 44px; border-radius: var(--r-md); border: 1px solid var(--line-strong); background: none; color: var(--ink); font: 400 22px/1 var(--font-sans); cursor: pointer; }
+  .pm-in .ph { aspect-ratio: 16 / 10; border-radius: var(--r-md); }
+  .pm-note { margin: 0; color: var(--ink-muted); }
+  .pm-actions[hidden] { display: none; }
+
+  @media (max-width: 1000px) {
+    .pgrid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .pgrid { grid-template-columns: minmax(0, 1fr); }
+    .tabs { display: flex; width: 100%; }
+    .tabs button { flex: 1; padding: 13px 8px; font-size: 13px; }
+  }
+</style>

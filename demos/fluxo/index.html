@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fluxo · Pedidos e entregas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f5f2; --surface:#fff; --ink:#111613; --muted:#69716c; --faint:#9aa19c; --line:#e6e8e3;
+  --acc:#1d6b47; --acc-soft:#e3f0e8; --warm:#d9822b; --warm-soft:#fbeedd; --blue:#2f5fd0; --blue-soft:#e6ecfb;
+  --r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Manrope,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+
+/* sidebar */
+.side{background:var(--surface);border-right:1px solid var(--line);padding:28px 18px;display:flex;flex-direction:column;gap:28px;position:sticky;top:0;height:100vh}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.03em;padding:0 10px}
+.logo i{width:28px;height:28px;border-radius:9px;background:var(--acc);display:grid;place-items:center}
+.logo i::before{content:"";width:12px;height:12px;border:2.5px solid #fff;border-radius:50% 50% 50% 2px}
+.nav{display:grid;gap:2px}
+.nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:var(--muted);text-decoration:none;font-weight:600}
+.nav a svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav a.on{background:var(--acc-soft);color:var(--acc)}
+.nav a .n{margin-left:auto;font-size:11px;background:var(--acc);color:#fff;border-radius:99px;padding:2px 8px}
+.nav small{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;font-weight:700;padding:14px 12px 6px}
+.me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;background:var(--bg)}
+.av{width:34px;height:34px;border-radius:50%;background:#c9d8cf;display:grid;place-items:center;font-weight:700;color:var(--acc);font-size:13px;flex:none}
+.me b{display:block;font-size:13px}.me span{font-size:12px;color:var(--muted)}
+
+/* main */
+.main{padding:32px 40px 48px;display:grid;gap:24px;align-content:start;min-width:0}
+.top{display:flex;align-items:center;gap:16px}
+.top h1{font-size:26px;letter-spacing:-.03em;font-weight:800}
+.top p{color:var(--muted);margin-top:4px}
+.search{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;color:var(--faint);width:260px}
+.search svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.btn{background:var(--ink);color:#fff;border:0;border-radius:12px;padding:11px 18px;font:700 14px Manrope,sans-serif;white-space:nowrap}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px}
+.kpi span{color:var(--muted);font-weight:600;font-size:13px}
+.kpi b{display:block;font-size:28px;letter-spacing:-.03em;margin:10px 0 6px;font-weight:800}
+.kpi em{font-style:normal;font-size:12px;font-weight:700;color:var(--acc)}
+.kpi em.w{color:var(--warm)}
+.row{display:grid;grid-template-columns:1.7fr 1fr;gap:16px}
+.ch{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
+.ch h2{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.ch span{color:var(--muted);font-size:12px}
+.seg{display:flex;gap:4px;background:var(--bg);padding:3px;border-radius:9px;font-size:12px;font-weight:700;color:var(--muted)}
+.seg i{font-style:normal;padding:5px 10px;border-radius:7px}.seg i.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.chart{height:210px;display:grid;grid-template-columns:repeat(14,1fr);align-items:end;gap:10px;border-bottom:1px solid var(--line);padding-bottom:0;position:relative}
+.chart i{display:block;background:#d5e6dc;border-radius:6px 6px 0 0}
+.chart i.hi{background:var(--acc)}
+.axis{display:grid;grid-template-columns:repeat(14,1fr);gap:10px;margin-top:8px;color:var(--faint);font-size:11px;text-align:center}
+.total{display:flex;gap:28px;margin-bottom:18px}
+.total b{font-size:22px;letter-spacing:-.02em}.total span{display:block;color:var(--muted);font-size:12px;margin-bottom:2px}
+.deliv{display:grid;gap:14px}
+.dv{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.dv .dot{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--acc-soft);color:var(--acc);font-weight:800;font-size:12px}
+.dv b{font-size:13px;display:block}.dv span{color:var(--muted);font-size:12px}
+.bar{height:6px;border-radius:9px;background:var(--bg);margin-top:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc);border-radius:9px}
+.dv small{font-weight:700;font-size:12px}
+.alert{margin-top:6px;padding:12px 14px;border-radius:12px;background:var(--warm-soft);color:#8a4a10;font-size:12.5px;font-weight:600;line-height:1.45}
+table{width:100%;border-collapse:collapse}
+th{font-size:12px;color:var(--faint);text-align:left;font-weight:700;padding:0 12px 12px;border-bottom:1px solid var(--line)}
+td{padding:14px 12px;border-bottom:1px solid var(--line);font-weight:600}
+tr:last-child td{border-bottom:0}
+td.m{color:var(--muted);font-weight:500}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.p-rota{background:var(--acc-soft);color:var(--acc)}.p-sep{background:var(--warm-soft);color:#a8601a}.p-novo{background:var(--blue-soft);color:var(--blue)}.p-ok{background:#eef0ed;color:var(--muted)}
+.list{display:none}
+.tabbar{display:none}
+.mtop{display:none}
+
+@media (max-width:1100px){
+  .app{grid-template-columns:1fr}
+  .side{display:none}
+  .main{padding:20px 18px 110px;gap:16px}
+  .mtop{display:flex;align-items:center;justify-content:space-between}
+  .top{flex-wrap:wrap}
+  .top h1{font-size:22px}
+  .search{display:none}
+  .top .btn{display:none}
+  .kpis{grid-template-columns:1fr 1fr;gap:12px}
+  .card{padding:16px}
+  .kpi b{font-size:22px;margin:8px 0 4px}
+  .row{grid-template-columns:1fr}
+  .chart{height:140px;gap:5px}.axis{gap:5px;font-size:10px}
+  .axis span:nth-child(even){visibility:hidden}
+  .seg{display:none}
+  table{display:none}
+  .list{display:grid;gap:10px}
+  .it{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .it:last-child{border:0;padding-bottom:0}
+  .it b{font-size:14px}.it span{color:var(--muted);font-size:12.5px}.it strong{text-align:right;font-size:14px}
+  .tabbar{display:grid;grid-template-columns:repeat(4,1fr) ;position:fixed;left:12px;right:12px;bottom:18px;background:var(--ink);border-radius:20px;padding:10px 8px;z-index:5}
+  .tabbar a{display:grid;justify-items:center;gap:4px;color:#8d958f;font-size:10.5px;font-weight:700;text-decoration:none}
+  .tabbar a svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tabbar a.on{color:#fff}
+  .tabbar .plus{width:44px;height:44px;border-radius:14px;background:var(--acc);color:#fff;display:grid;place-items:center;margin:-4px auto 0}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="logo"><i></i>fluxo</div>
+    <nav class="nav">
+      <a class="on" href="#"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>Visão geral</a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M6 4h12l1 16H5z"/><path d="M9 8a3 3 0 0 0 6 0"/></svg>Pedidos<span class="n">14</span></a>
+      <a href="#"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c.8-3.5 3.2-5.5 6-5.5s5.2 2 6 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c1.6.8 2.6 2.6 3 5.2"/></svg>Clientes</a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>Estoque</a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M2 6h11v10H2zM13 10h5l4 4v2h-9"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>Entregas</a>
+      <small>Gestão</small>
+      <a href="#"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg>Financeiro</a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Relatórios</a>
+    </nav>
+    <div class="me"><span class="av">MS</span><div><b>Marina Souza</b><span>Comercial</span></div></div>
+  </aside>
+
+  <main class="main">
+    <div class="mtop"><div class="logo" style="padding:0"><i></i>fluxo</div><span class="av">MS</span></div>
+    <div class="top">
+      <div><h1>Bom dia, Marina</h1><p>Quarta, 12 de novembro · 14 pedidos para separar hoje</p></div>
+      <div class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>Buscar pedido ou cliente</div>
+      <button class="btn">+ Novo pedido</button>
+    </div>
+
+    <section class="kpis">
+      <div class="card kpi"><span>Pedidos hoje</span><b>14</b><em>+3 em relação a ontem</em></div>
+      <div class="card kpi"><span>Faturamento do dia</span><b>R$ 18.430</b><em>+12% na semana</em></div>
+      <div class="card kpi"><span>Em rota agora</span><b>6</b><em>2 entregas concluídas</em></div>
+      <div class="card kpi"><span>Estoque baixo</span><b>3 itens</b><em class="w">Repor até sexta</em></div>
+    </section>
+
+    <section class="row">
+      <div class="card">
+        <div class="ch"><h2>Faturamento · últimos 14 dias</h2><div class="seg"><i>7d</i><i class="on">14d</i><i>30d</i></div></div>
+        <div class="total"><div><span>Total do período</span><b>R$ 214.860</b></div><div><span>Ticket médio</span><b>R$ 1.312</b></div></div>
+        <div class="chart">
+          <i style="height:48%"></i><i style="height:62%"></i><i style="height:55%"></i><i style="height:70%"></i><i style="height:38%"></i><i style="height:22%"></i><i style="height:58%"></i>
+          <i style="height:66%"></i><i style="height:74%"></i><i style="height:61%"></i><i style="height:80%"></i><i style="height:45%"></i><i style="height:28%"></i><i class="hi" style="height:88%"></i>
+        </div>
+        <div class="axis"><span>30</span><span>31</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>
+      </div>
+      <div class="card">
+        <div class="ch"><h2>Entregas de hoje</h2><span>6 em rota</span></div>
+        <div class="deliv">
+          <div class="dv"><span class="dot">R1</span><div><b>Zona Sul · Carlos</b><div class="bar"><i style="width:80%"></i></div></div><small>4/5</small></div>
+          <div class="dv"><span class="dot">R2</span><div><b>Centro · Ana Paula</b><div class="bar"><i style="width:50%"></i></div></div><small>3/6</small></div>
+          <div class="dv"><span class="dot">R3</span><div><b>Zona Norte · Diego</b><div class="bar"><i style="width:20%"></i></div></div><small>1/5</small></div>
+          <div class="alert">Água mineral 500 ml acaba em 2 dias. Compra sugerida: 40 fardos.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="ch"><h2>Pedidos recentes</h2><span>Atualizado agora</span></div>
+      <table>
+        <thead><tr><th>Pedido</th><th>Cliente</th><th>Itens</th><th>Valor</th><th>Status</th><th>Previsão</th></tr></thead>
+        <tbody>
+          <tr><td>#1045</td><td>Mercado Bom Preço</td><td class="m">24 caixas</td><td>R$ 2.180</td><td><span class="pill p-novo">Novo</span></td><td class="m">Amanhã, 9h</td></tr>
+          <tr><td>#1044</td><td>Empório Sol</td><td class="m">30 caixas</td><td>R$ 3.420</td><td><span class="pill p-sep">Separando</span></td><td class="m">Hoje, 16h</td></tr>
+          <tr><td>#1043</td><td>Bar do Zé</td><td class="m">12 caixas</td><td>R$ 960</td><td><span class="pill p-rota">Em rota</span></td><td class="m">Hoje, 14h</td></tr>
+          <tr><td>#1042</td><td>Padaria Estrela</td><td class="m">8 caixas</td><td>R$ 712</td><td><span class="pill p-ok">Entregue</span></td><td class="m">Hoje, 10h</td></tr>
+        </tbody>
+      </table>
+      <div class="list">
+        <div class="it"><b>#1045 · Mercado Bom Preço</b><strong>R$ 2.180</strong><span>24 caixas · amanhã, 9h</span><span class="pill p-novo">Novo</span></div>
+        <div class="it"><b>#1044 · Empório Sol</b><strong>R$ 3.420</strong><span>30 caixas · hoje, 16h</span><span class="pill p-sep">Separando</span></div>
+        <div class="it"><b>#1043 · Bar do Zé</b><strong>R$ 960</strong><span>12 caixas · hoje, 14h</span><span class="pill p-rota">Em rota</span></div>
+      </div>
+    </section>
+  </main>
+</div>
+<nav class="tabbar">
+  <a class="on" href="#"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>Início</a>
+  <a href="#"><svg viewBox="0 0 24 24"><path d="M6 4h12l1 16H5z"/><path d="M9 8a3 3 0 0 0 6 0"/></svg>Pedidos</a>
+  <a href="#"><svg viewBox="0 0 24 24"><path d="M2 6h11v10H2zM13 10h5l4 4v2h-9"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>Entregas</a>
+  <a href="#"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>Estoque</a>
+</nav>
+</body>
+</html>

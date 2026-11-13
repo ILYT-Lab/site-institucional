@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chave · CRM imobiliário</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1014; --surface:#161920; --raise:#1d212a; --ink:#eef0f5; --muted:#8b92a3; --faint:#5d6476; --line:#262a35;
+  --acc:#8ea6ff; --acc-ink:#0e1014; --acc-soft:rgba(142,166,255,.14); --ok:#5fd3a0; --ok-soft:rgba(95,211,160,.14); --warm:#f2b866; --warm-soft:rgba(242,184,102,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:13.5px;-webkit-font-smoothing:antialiased}
+.app{display:grid;grid-template-columns:72px 1fr 380px;height:100vh}
+.rail{border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:8px;padding:22px 0}
+.mark{width:38px;height:38px;border-radius:12px;background:var(--acc);display:grid;place-items:center;margin-bottom:18px}
+.mark svg{width:20px;height:20px;stroke:var(--acc-ink);fill:none;stroke-width:2.4;stroke-linecap:round}
+.rail a{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:var(--faint)}
+.rail a.on{background:var(--raise);color:var(--ink)}
+.rail svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rail .av{margin-top:auto}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:12px;background:#2b3245;color:var(--acc);flex:none}
+
+.board{padding:28px 28px 0;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.bh{display:flex;align-items:flex-end;gap:16px;margin-bottom:22px}
+.bh h1{font-size:24px;font-weight:800;letter-spacing:-.03em}
+.bh p{color:var(--muted);margin-top:4px}
+.chips{margin-left:auto;display:flex;gap:8px}
+.chip{border:1px solid var(--line);border-radius:99px;padding:8px 14px;color:var(--muted);font-weight:600;font-size:12.5px}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+.st{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.st span{color:var(--muted);font-size:12px;font-weight:600}.st b{display:block;font-size:22px;letter-spacing:-.02em;margin-top:6px}
+.st em{font-style:normal;color:var(--ok);font-size:12px;font-weight:700;margin-left:6px}
+.cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;flex:1;min-height:0}
+.col h3{font-size:12.5px;font-weight:700;color:var(--muted);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.col h3 i{font-style:normal;background:var(--raise);border-radius:99px;padding:1px 8px;color:var(--ink);font-size:11px}
+.col h3::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,var(--faint))}
+.lead{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;display:grid;gap:10px}
+.lead.sel{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-soft)}
+.lead .t{display:flex;align-items:center;gap:10px}
+.lead b{display:block;font-size:13.5px}.lead span{color:var(--muted);font-size:12px}
+.lead .im{font-size:12.5px;color:var(--ink);font-weight:600;line-height:1.4}
+.lead .f{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;font-weight:700;padding:3px 8px;border-radius:7px;background:var(--raise);color:var(--muted)}
+.tag.ia{background:var(--acc-soft);color:var(--acc)}.tag.hot{background:var(--warm-soft);color:var(--warm)}.tag.ok{background:var(--ok-soft);color:var(--ok)}
+
+.chat{border-left:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;min-height:0}
+.chh{padding:22px 22px 16px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center}
+.chh b{font-size:15px;display:block}.chh span{color:var(--muted);font-size:12px}
+.chh .tag{margin-left:auto}
+.ctx{margin:16px 22px 0;padding:12px 14px;border-radius:12px;background:var(--raise);display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ctx span{color:var(--muted);font-size:11.5px;display:block}.ctx b{font-size:12.5px}
+.msgs{flex:1;padding:18px 22px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.day{align-self:center;color:var(--faint);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin:2px 0}
+.m{max-width:84%;padding:10px 13px;border-radius:14px;line-height:1.45;font-size:13px}
+.m small{display:block;color:var(--faint);font-size:10.5px;margin-top:4px;font-weight:600}
+.in{background:var(--raise);border-bottom-left-radius:4px}
+.out{align-self:flex-end;background:var(--acc-soft);border:1px solid rgba(142,166,255,.25);border-bottom-right-radius:4px}
+.out small{color:var(--acc)}
+.card-imv{display:grid;grid-template-columns:56px 1fr;gap:10px;align-items:center;margin-top:8px;padding:8px;border-radius:10px;background:rgba(0,0,0,.25)}
+.card-imv i{height:44px;border-radius:8px;background:linear-gradient(135deg,#3a4566,#232a3d)}
+.card-imv b{font-size:12px;display:block}.card-imv span{font-size:11px;color:var(--muted)}
+.sys{align-self:center;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--ok);background:var(--ok-soft);padding:7px 12px;border-radius:99px}
+.comp{margin:0 16px 16px;border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;color:var(--faint)}
+.comp .sug{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--acc);background:var(--acc-soft);padding:6px 10px;border-radius:8px}
+.mbar,.mtabs{display:none}
+
+@media (max-width:1100px){
+  .app{grid-template-columns:1fr;height:auto;min-height:100vh}
+  .rail,.board{display:none}
+  .chat{border:0;height:100vh;background:var(--bg)}
+  .msgs{justify-content:flex-end;min-height:0}
+  .mbar{display:flex;align-items:center;gap:12px;padding:14px 18px 8px}
+  .mbar .mark{width:30px;height:30px;border-radius:9px;margin:0}.mbar .mark svg{width:16px;height:16px}
+  .mbar b{font-size:16px;font-weight:800;letter-spacing:-.02em}
+  .mbar .av{margin-left:auto}
+  .mtabs{display:flex;gap:6px;padding:6px 18px 10px}
+  .chh{padding:14px 18px;border-top:1px solid var(--line)}
+  .ctx{margin:12px 18px 0;background:var(--surface)}
+  .msgs{padding:14px 18px;justify-content:flex-end}
+  .in{background:var(--surface)}
+  .comp{margin:0 14px 18px;background:var(--surface)}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="rail">
+    <span class="mark"><svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M21 12v2"/></svg></span>
+    <a class="on" href="#"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="11" rx="1.5"/><rect x="17" y="4" width="4" height="7" rx="1.5"/></svg></a>
+    <a href="#"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg></a>
+    <a href="#"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg></a>
+    <a href="#"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></a>
+    <a href="#"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></a>
+    <span class="av">RL</span>
+  </nav>
+
+  <section class="board">
+    <div class="bh">
+      <div><h1>Funil de clientes</h1><p>32 negociações abertas · 9 respondidas pela IA hoje</p></div>
+      <div class="chips"><span class="chip on">Todos</span><span class="chip">Venda</span><span class="chip">Locação</span></div>
+    </div>
+    <div class="stats">
+      <div class="st"><span>Novos contatos hoje</span><b>18<em>+6</em></b></div>
+      <div class="st"><span>Tempo de resposta</span><b>40 s</b></div>
+      <div class="st"><span>Visitas na semana</span><b>11</b></div>
+      <div class="st"><span>Propostas abertas</span><b>R$ 4,2 mi</b></div>
+    </div>
+    <div class="cols">
+      <div class="col" style="--c:#8ea6ff"><h3>Novos <i>9</i></h3>
+        <div class="lead sel"><div class="t"><span class="av">JC</span><div><b>Juliana Costa</b><span>WhatsApp · há 2 min</span></div></div><div class="im">Apto 2 dorms · Vila Mariana até R$ 650 mil</div><div class="f"><span class="tag ia">Atendida pela IA</span><span class="tag hot">Quente</span></div></div>
+        <div class="lead"><div class="t"><span class="av">RM</span><div><b>Rafael Moura</b><span>Site · há 18 min</span></div></div><div class="im">Casa para alugar · Butantã</div><div class="f"><span class="tag ia">Atendido pela IA</span></div></div>
+        <div class="lead"><div class="t"><span class="av">PA</span><div><b>Priscila Alves</b><span>Instagram · há 1 h</span></div></div><div class="im">Studio perto do metrô</div><div class="f"><span class="tag">Aguardando</span></div></div>
+      </div>
+      <div class="col" style="--c:#f2b866"><h3>Em atendimento <i>11</i></h3>
+        <div class="lead"><div class="t"><span class="av">MT</span><div><b>Marcos Teixeira</b><span>Corretora: Renata</span></div></div><div class="im">Cobertura · Pinheiros</div><div class="f"><span class="tag hot">Quente</span><span class="tag">3 imóveis enviados</span></div></div>
+        <div class="lead"><div class="t"><span class="av">LF</span><div><b>Larissa Freitas</b><span>Corretor: André</span></div></div><div class="im">Apto 3 dorms · Moema</div><div class="f"><span class="tag">Retornar hoje</span></div></div>
+      </div>
+      <div class="col" style="--c:#5fd3a0"><h3>Visita agendada <i>7</i></h3>
+        <div class="lead"><div class="t"><span class="av">GS</span><div><b>Gustavo Silva</b><span>Sáb, 10h</span></div></div><div class="im">Rua Domingos de Morais, 1.200</div><div class="f"><span class="tag ok">Confirmada</span><span class="tag ia">Agendada pela IA</span></div></div>
+        <div class="lead"><div class="t"><span class="av">NB</span><div><b>Natália Borges</b><span>Seg, 15h</span></div></div><div class="im">Apto 2 dorms · Saúde</div><div class="f"><span class="tag ok">Confirmada</span></div></div>
+      </div>
+      <div class="col" style="--c:#c792ea"><h3>Proposta <i>5</i></h3>
+        <div class="lead"><div class="t"><span class="av">EP</span><div><b>Eduardo Pires</b><span>Corretora: Renata</span></div></div><div class="im">R$ 890 mil · financiamento</div><div class="f"><span class="tag">Documentos ok</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="chat">
+    <div class="mbar"><span class="mark"><svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M21 12v2"/></svg></span><b>chave</b><span class="av">RL</span></div>
+    <div class="mtabs"><span class="chip">Funil</span><span class="chip on">Conversas · 9</span><span class="chip">Agenda</span></div>
+    <div class="chh"><span class="av">JC</span><div><b>Juliana Costa</b><span>WhatsApp · online</span></div><span class="tag ia">IA ativa</span></div>
+    <div class="ctx"><div><span>Procura</span><b>Apto 2 dorms</b></div><div><span>Orçamento</span><b>Até R$ 650 mil</b></div></div>
+    <div class="msgs">
+      <span class="day">Hoje · 22:47</span>
+      <div class="m in">Oi! Vi o anúncio do apartamento na Vila Mariana. Ainda está disponível?<small>22:47</small></div>
+      <div class="m out">Oi, Juliana! Está sim. São 2 dormitórios, 68 m² e 1 vaga, a 6 minutos do metrô. Separei também uma opção parecida na mesma rua:
+        <div class="card-imv"><i></i><div><b>Apto 2 dorms · 72 m²</b><span>R$ 640 mil · Vila Mariana</span></div></div><small>22:47 · respondido pela IA</small></div>
+      <div class="m in">Gostei! Dá para visitar no sábado?<small>22:49</small></div>
+      <div class="m out">Claro! Tenho sábado às 10h ou às 14h com a corretora Renata. Qual fica melhor?<small>22:49 · respondido pela IA</small></div>
+      <div class="m in">10h 👍<small>22:50</small></div>
+      <span class="sys">✓ Visita agendada e corretora avisada</span>
+    </div>
+    <div class="comp">Escreva uma mensagem<span class="sug">Assumir conversa</span></div>
+  </aside>
+</div>
+</body>
+</html>

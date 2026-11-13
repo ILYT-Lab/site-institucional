@@ -1,0 +1,89 @@
+---
+const steps = [
+  { t: 'Primeiro, a gente entende.', p: 'O diagnóstico é gratuito: uma conversa de 30 minutos por vídeo ou pelo WhatsApp, como você preferir. Você não ouve proposta, ouve perguntas sobre a sua empresa e a sua rotina. Sem termos técnicos.' },
+  { t: 'Depois, tudo por escrito.', p: 'Em até 48 horas você recebe, em linguagem simples, o que será feito, o prazo e o preço fechados. Se algo mudar no caminho, você vê o impacto antes e decide.' },
+  { t: 'Você acompanha sem precisar cobrar.', p: 'Toda semana chega um resumo no seu WhatsApp: o que ficou pronto, o que vem agora e o que precisa da sua aprovação. E você pode acompanhar tudo em um painel com acesso exclusivo. Nada vai ao ar sem o seu ok.', wa: true },
+  { t: 'A entrega só termina quando a sua equipe estiver usando.', p: 'O projeto inclui treinamento prático, acompanhamento nos primeiros dias de uso e suporte prioritário no lançamento. Depois, você tem 30 dias de garantia e, se quiser, um plano mensal de suporte. A gente não some.' },
+  { t: 'Tudo é seu.', p: 'Após a quitação, domínio, código, dados e contas ficam no nome da sua empresa. Se um dia quiser seguir com outra empresa, você leva tudo.' },
+];
+const deadlines = [
+  { n: '24', u: 'horas', p: 'para responder o seu contato.' },
+  { n: '48', u: 'horas', p: 'para a proposta chegar depois do diagnóstico.' },
+  { n: '2–5', u: 'dias', p: 'para uma landing page ficar pronta.' },
+  { n: '4–7', u: 'dias', p: 'para um site completo no ar.' },
+  { n: '~30', u: 'dias', p: 'para um sistema ou aplicativo, conforme o que a sua empresa precisa.' },
+];
+---
+<section class="band flush" id="como-funciona">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="eyebrow">Como a gente trabalha</p>
+      <h2>Na ILYT, a programação é <span class="thin">a última coisa que a gente faz.</span></h2>
+    </header>
+    <div class="work" id="work">
+      <span class="work-fill" id="workFill"></span>
+      {steps.map((s, i) => (
+        <div class="wrow">
+          <span class="n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{s.t}</h3>
+          <div>
+            <p>{s.p}</p>
+            {s.wa && (
+              <div class="wa" role="img" aria-label="Exemplo de resumo semanal enviado pelo WhatsApp">
+                <div class="who"><span>ILYT · resumo da semana</span><span>exemplo</span></div>
+                <div class="m"><b>Semana 2 do seu sistema de pedidos</b><span>✓ Pronto para testar: cadastro de clientes</span><span>→ Esta semana: tela de pedidos</span><span>● Precisa de você: aprovar os textos da tela inicial</span><small>sex 17:02</small></div>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="deadlines">
+      <h3 class="eyebrow">Prazos que praticamos</h3>
+      <div class="strip">
+        {deadlines.map((d) => <div><span class="big">{d.n} <small>{d.u}</small></span><p>{d.p}</p></div>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* cinco linhas; uma linha âmbar desce pela borda esquerda conforme a leitura */
+  .work { position: relative; border-top: 1px solid var(--line); }
+  .work-fill { position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: var(--amber); transform-origin: top; }
+  .wrow { display: grid; grid-template-columns: 96px minmax(0, .85fr) minmax(0, 1.15fr); gap: 16px 40px; padding: 36px 0 36px 28px; border-bottom: 1px solid var(--line); }
+  .wrow .n { font: 300 clamp(36px, 3.6vw, 56px)/1 var(--font-display); letter-spacing: -.04em; color: var(--ink-muted); }
+  .wrow h3 { font: 500 clamp(20px, 1.8vw, 26px)/1.25 var(--font-display); letter-spacing: -.01em; }
+  .wrow p { margin: 0; color: var(--ink-muted); max-width: 56ch; }
+  .wa { margin-top: 20px; max-width: 400px; background: #efeae2; border-radius: 16px; padding: 12px; color: var(--u-ink); font-size: 13px; line-height: 1.5; box-shadow: var(--shadow-piece); }
+  .wa .who { font: 500 10px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: #4e4e55; margin: 2px 4px 8px; display: flex; justify-content: space-between; }
+  .wa .m { background: #fff; border-radius: 10px; padding: 10px 12px; display: grid; gap: 4px; }
+  .wa .m b { font-size: 13.5px; }
+  .wa small { display: block; text-align: right; color: var(--u-mut); font-size: 10px; }
+  .deadlines { margin-top: 72px; }
+  .deadlines .eyebrow { margin-bottom: 20px; font-weight: 500; }
+  .strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--r-piece); overflow: hidden; }
+  .strip > div { padding: 36px 30px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .strip > div:last-child { border-right: 0; }
+  .strip .big { font: 600 clamp(32px, 3.2vw, 46px)/1 var(--font-display); letter-spacing: -.03em; white-space: nowrap; }
+  .strip .big small { font-size: .42em; font-weight: 400; color: var(--ink-muted); letter-spacing: 0; }
+  .strip p { margin: 0; color: var(--ink-muted); }
+
+  @media (max-width: 1000px) {
+    .wrow { grid-template-columns: 64px minmax(0, 1fr); }
+    .wrow > div { grid-column: 2; }
+    .strip { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    /* 2 + 2 + o último item (~30 dias) na linha inteira */
+    .strip > div:nth-child(2n) { border-right: 0; }
+    .strip > div:nth-child(-n+4) { border-bottom: 1px solid var(--line); }
+    .strip > div:last-child { grid-column: 1 / -1; }
+  }
+  @media (max-width: 600px) {
+    .wrow { grid-template-columns: minmax(0, 1fr); padding-left: 20px; }
+    .wrow > div { grid-column: auto; }
+    .strip { grid-template-columns: minmax(0, 1fr); }
+    .strip > div { border-right: 0; border-bottom: 1px solid var(--line); }
+    .strip > div:last-child { border-bottom: 0; }
+  }
+</style>

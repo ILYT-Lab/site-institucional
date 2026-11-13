@@ -1,0 +1,150 @@
+---
+// Objetivos do cliente. Desktop: lista à esquerda e um palco à direita que troca a cena (avança sozinho a cada 6s).
+// Até 1000px: acordeão, cada cena dentro do seu item. Script: src/scripts/goals.ts
+import { whatsappUrl } from '../../config/site';
+import Atrair from './cenas/Atrair.astro';
+import Organizar from './cenas/Organizar.astro';
+import Automatizar from './cenas/Automatizar.astro';
+import Aplicativo from './cenas/Aplicativo.astro';
+
+const cenas = [Atrair, Organizar, Automatizar, Aplicativo];
+
+const goals = [
+  { t: 'Para atrair mais clientes', p: 'Sites profissionais para apresentar sua empresa e fortalecer sua presença no Google. Landing pages para transformar visitas em contatos pelo WhatsApp e atendimento com IA para responder mesmo fora do horário comercial.', tags: ['Sites', 'Landing pages', 'Atendimento com IA'] },
+  { t: 'Para organizar a operação', p: 'Clientes, pedidos, estoque e financeiro organizados em um sistema feito para a rotina da sua empresa. Acompanhe informações e indicadores em um só lugar e tenha mais clareza para tomar decisões.', tags: ['Sistemas sob medida', 'CRM', 'Painéis de indicadores'] },
+  { t: 'Para reduzir tarefas manuais', p: 'A gente conecta os programas que você já usa e automatiza tarefas como copiar informações, preencher cadastros e enviar avisos. Menos atividades manuais e menos retrabalho para sua equipe.', tags: ['Integrações', 'Automações', 'Soluções com IA'] },
+  { t: 'Para ter seu próprio aplicativo', p: 'Sua marca no celular do cliente. Você fala direto com ele por notificação, e ele agenda, compra ou acessa seus serviços em poucos toques. Também dá para ter um app para sua equipe registrar atendimentos e trabalhar em campo.', tags: ['Aplicativos iOS e Android'] },
+];
+---
+<section class="band flush" id="solucoes">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="eyebrow">Nossas especialidades</p>
+      <h2>Como a gente pode ajudar <span class="thin">sua empresa?</span></h2>
+      <p>Você conta o que precisa melhorar. A gente entende o desafio e desenvolve uma solução que faz sentido para o seu negócio.</p>
+    </header>
+    <div class="goals" id="goals">
+      <div class="goal-list">
+        {goals.map((g, i) => (
+          <div class={i === 0 ? 'goal is-on' : 'goal'}>
+            <h3 class="goal-h">
+              <button class="goal-btn" type="button" id={`gt${i}`} aria-controls={`gp${i}`} aria-expanded={i === 0 ? 'true' : 'false'}>
+                <span class="gn">{String(i + 1).padStart(2, '0')}</span><span class="gt">{g.t}</span><span class="gbar" aria-hidden="true"><i></i></span>
+              </button>
+            </h3>
+            <div class="goal-body" id={`gp${i}`} role="region" aria-labelledby={`gt${i}`}>
+              <div class="goal-in">
+                <p>{g.p}</p>
+                <ul class="tags">{g.tags.map((t) => <li>{t}</li>)}</ul>
+                {(() => { const Cena = cenas[i]; return <Cena on={i === 0} />; })()}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- um palco no desktop; até 1000px cada cena vai para dentro do seu item -->
+      <!-- palco do desktop: o script move as cenas para cá; até 1000px cada cena fica dentro do seu item -->
+      <div class="goal-stage" aria-hidden="true"></div>
+    </div>
+    <p class="goal-foot">Precisa de algo diferente? <a href={whatsappUrl()} target="_blank" rel="noopener" data-cta="especialidades">Conta pra gente →</a></p>
+  </div>
+</section>
+
+<style is:global>
+  .goals { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 56px; align-items: start; }
+  .goal { position: relative; border-top: 1px solid var(--line); }
+  .goal:last-child { border-bottom: 1px solid var(--line); }
+  .goal-h { margin: 0; font: inherit; }
+  .goal-btn { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: flex; align-items: baseline; gap: 18px; padding: 24px 0; font: 600 clamp(20px, 1.9vw, 28px)/1.15 var(--font-display); letter-spacing: -.02em; color: var(--ink-muted); transition: color .3s; }
+  .goal-btn:hover, .goal.is-on .goal-btn { color: var(--ink); }
+  .goal-btn:focus-visible { outline: 2px solid var(--focus, var(--amber)); outline-offset: 4px; border-radius: 4px; }
+  .goal .gn { font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .1em; color: var(--ink-muted); transition: color .3s; }
+  .goal.is-on .gn { color: var(--amber); }
+  .gbar { position: absolute; left: 0; right: 0; top: -1px; height: 2px; pointer-events: none; }
+  .gbar i { display: block; height: 100%; background: var(--amber); transform-origin: 0 50%; transform: scaleX(0); }
+  .goal.is-on .gbar i { transform: scaleX(1); }
+  .goals.auto .goal.is-on .gbar i { animation: gfill 6s linear forwards; }
+  .goals.auto.paused .gbar i, .goals.auto.off .gbar i { animation-play-state: paused; }
+  @keyframes gfill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .goal-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s cubic-bezier(.16, 1, .3, 1); }
+  .goal.is-on .goal-body { grid-template-rows: 1fr; }
+  .goal-in { overflow: hidden; display: grid; gap: 18px; padding-left: 38px; }
+  .goal.is-on .goal-in { padding-bottom: 28px; }
+  .goal-in p { margin: 0; color: var(--ink-muted); font-size: var(--fs-lead); max-width: 44ch; }
+  .goal-stage, .goal-in .gshot { position: relative; border-radius: var(--r-big); border: 1px solid var(--line); background: radial-gradient(90% 70% at 85% 0%, rgba(255, 176, 32, .2), transparent 60%), radial-gradient(70% 60% at 0% 100%, rgba(255, 176, 32, .08), transparent 60%), var(--surface); }
+  .goal-stage { height: 600px; } /* fixo, para não pular quando o item aberto à esquerda muda de altura */
+  .goal-stage .gshot { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .45s, visibility .45s; }
+  .goal-stage .gshot.is-on { opacity: 1; visibility: visible; }
+  .goal-foot { margin: 36px 0 0; color: var(--ink-muted); }
+  .goal-foot a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--amber); text-underline-offset: 4px; }
+
+  /* cenas: o texto do item contado em três passos */
+.scene { position: relative; z-index: 3; height: 100%; display: grid; place-items: center; padding: 28px; font-family: var(--font-sans); color: #fff; }
+.steps { width: min(100%, 420px); display: grid; gap: 14px; }
+.step { position: relative; display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px 14px; align-items: center; }
+.step .sn { position: relative; z-index: 1; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--amber); color: var(--on-amber); font: 600 11px/1 var(--font-mono); }
+.step .sl { font: 500 var(--fs-label)/1.2 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+.step .sline { position: absolute; left: 12px; top: 26px; bottom: -14px; width: 2px; background: rgba(255,176,32,.45); transform-origin: 50% 0; }
+.step .sc { grid-column: 2; display: grid; gap: 8px; padding: 11px 14px; border-radius: 14px; font-size: 13px; line-height: 1.4; background: linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.04) 60%), rgba(10,10,11,.22); backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%); border: 1px solid rgba(255,255,255,.2); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 18px 40px rgba(0,0,0,.35); }
+.sc .q { display: flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 99px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.16); color: rgba(255,255,255,.85); font-size: 12.5px; }
+.sc .q svg { width: 14px; height: 14px; flex: none; }
+.sc b { display: block; font-weight: 600; font-size: 14.5px; line-height: 1.25; }
+.sc small { display: block; margin-top: 3px; color: rgba(255,255,255,.65); font-size: 11.5px; }
+.sc .url { font: 400 11px/1 var(--font-mono); color: rgba(255,255,255,.6); }
+.sc .b { justify-self: start; background: #fff; color: #0a0a0b; font: 600 12px/1 var(--font-sans); padding: 9px 13px; border-radius: 9px; }
+.sc .msg { max-width: 88%; padding: 8px 11px; border-radius: 12px 12px 12px 4px; background: rgba(255,255,255,.12); font-size: 12.5px; line-height: 1.4; }
+.sc .msg.out { justify-self: end; border-radius: 12px 12px 4px 12px; background: rgba(255,176,32,.2); border: 1px solid rgba(255,176,32,.35); }
+.sc .msg small { font-size: 10.5px; text-align: right; }
+.sc.scat { display: flex; flex-wrap: wrap; gap: 8px; }
+.sc.scat span { padding: 7px 10px; border-radius: 8px; background: rgba(255,255,255,.08); border: 1px dashed rgba(255,255,255,.28); color: rgba(255,255,255,.8); font-size: 12px; }
+.sc.scat span:nth-child(odd) { transform: rotate(-2deg); }
+.sc.scat span:nth-child(even) { transform: rotate(1.5deg); }
+.kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.kpis div { padding: 6px 10px; border-radius: 9px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); }
+.kpis small { margin: 0 0 3px; }
+.kpis b { font-size: 15px; }
+.bars { display: flex; align-items: flex-end; gap: 6px; height: 30px; }
+.bars i { flex: 1; border-radius: 3px 3px 0 0; background: rgba(255,255,255,.22); }
+.bars i.hi { background: var(--amber); }
+.sc .alert { padding: 8px 10px; border-radius: 9px; background: rgba(255,176,32,.16); border: 1px solid rgba(255,176,32,.35); }
+.manual, .log { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.manual li { padding: 7px 10px 7px 30px; border-radius: 8px; background: rgba(255,255,255,.07); border: 1px dashed rgba(255,255,255,.25); font-size: 12.5px; position: relative; }
+.manual li::before { content: "\270E"; position: absolute; left: 11px; color: rgba(255,255,255,.55); }
+.apps { display: flex; align-items: center; }
+.apps span { flex: none; padding: 8px 10px; border-radius: 9px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); font-size: 12px; font-weight: 600; }
+.apps i { flex: 1; min-width: 10px; height: 2px; background: var(--amber); }
+.log li { display: flex; justify-content: space-between; gap: 10px; padding: 7px 10px 7px 30px; border-radius: 8px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); font-size: 12.5px; position: relative; }
+.log li::before { content: "\2713"; position: absolute; left: 11px; color: #7fe0bb; font-weight: 600; }
+.log li span { color: rgba(255,255,255,.55); font: 400 11px/1.6 var(--font-mono); }
+.icons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center; }
+.icons span { display: grid; justify-items: center; gap: 5px; font-size: 11px; color: rgba(255,255,255,.65); }
+.icons i { width: 40px; height: 40px; border-radius: 11px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.16); display: grid; place-items: center; font: 600 17px/1 var(--font-display); font-style: normal; }
+.icons .me { color: #fff; font-weight: 600; }
+.icons .me i { background: var(--amber); color: var(--on-amber); border-color: var(--amber); box-shadow: 0 0 0 4px rgba(255,176,32,.18); }
+.slots { display: flex; gap: 6px; }
+.slots span { flex: 1; text-align: center; padding: 7px 0; border-radius: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); font: 400 11.5px/1 var(--font-mono); }
+.slots .on { background: rgba(255,176,32,.2); border-color: rgba(255,176,32,.5); color: var(--amber); }
+.sc.home { border-radius: 22px; padding: 10px 14px 14px; }
+.sc .sbar { display: flex; justify-content: space-between; font: 600 10.5px/1 var(--font-sans); color: rgba(255,255,255,.7); padding: 0 4px; }
+.sc.push { grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: start; border-radius: 18px; }
+.sc.push .ico { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: var(--amber); color: var(--on-amber); font: 600 15px/1 var(--font-display); font-style: normal; }
+.sc.push .app { margin: 0 0 4px; font: 500 10px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+.sc .sync { color: #7fe0bb; font-size: 12px; font-weight: 600; }
+.step .won { grid-column: 2; color: var(--amber); font: 500 12.5px/1.3 var(--font-sans); }
+
+  /* no desktop as cenas vivem no palco; antes do script movê-las, ficam escondidas dentro dos itens */
+  @media (min-width: 1001px) {
+    .goal-in .gshot { display: none; }
+  }
+  @media (max-width: 1000px) {
+    .goals { grid-template-columns: minmax(0, 1fr); }
+    .goal-stage { display: none; }
+    .goal-in { padding-left: 0; }
+    .goal-in .gshot { margin-top: 4px; }
+    .goal:not(.is-on) .goal-body { transition: none; }
+  }
+  @media (max-width: 600px) {
+    .scene { padding: 22px 16px; }
+  }
+</style>

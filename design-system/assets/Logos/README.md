@@ -1,0 +1,1 @@
+Logo oficial da ILYT em duas versões: branco sobre preto (tema Preto) e preto sobre branco (tema Branco). Use a versão do tema e nunca recolora. Arquivos em JPG de alta resolução; o SVG oficial vai substituí-los.

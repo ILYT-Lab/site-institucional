@@ -1,0 +1,15 @@
+---
+interface Props { on?: boolean }
+const { on = false } = Astro.props;
+---
+<div class:list={["gshot has-scene", { "is-on": on }]} aria-hidden="true">
+  <div class="scene"><div class="steps">
+    <div class="step"><span class="sn">1</span><span class="sl">Hoje, tudo à mão</span><i class="sline"></i>
+      <div class="sc"><ul class="manual"><li>Copiar o pedido da loja virtual</li><li>Preencher o cadastro do cliente</li><li>Avisar o cliente no WhatsApp</li></ul><small>≈ 12 minutos por pedido, todo dia</small></div></div>
+    <div class="step"><span class="sn">2</span><span class="sl">Depois, os programas conectados</span><i class="sline"></i>
+      <div class="sc"><div class="apps"><span>Loja virtual</span><i></i><span>Sistema</span><i></i><span>WhatsApp</span></div></div></div>
+    <div class="step"><span class="sn">3</span><span class="sl">Tudo acontece sozinho</span>
+      <div class="sc"><ul class="log"><li>Pedido #1045 copiado para o sistema<span>10:02</span></li><li>Cadastro do cliente preenchido<span>10:02</span></li><li class="late">Cliente avisado no WhatsApp<span>10:03</span></li></ul></div>
+      <div class="won">✓ Ninguém precisou digitar nada</div></div>
+  </div></div>
+</div>

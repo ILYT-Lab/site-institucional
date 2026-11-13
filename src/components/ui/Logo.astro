@@ -1,0 +1,14 @@
+---
+// Logo ILYT em vetor. Cada letra/peça é um elemento separado (.pc), para a animação do rodapé.
+// Provisório: redesenho da logo atual. Ao receber a oficial, trocar os desenhos aqui e em public/favicon.svg.
+interface Props { class?: string; title?: string }
+const { class: cls = '', title = 'ILYT' } = Astro.props;
+---
+<svg class={cls} viewBox="215 363 2245 770" role="img" aria-label={title} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <rect class="pc" x="215" y="363" width="165" height="770" rx="28" />
+  <path class="pc" d="M475 363H584Q612 363 612 391V860Q612 962 714 962H1075Q1103 962 1103 990V1105Q1103 1133 1075 1133H700Q447 1133 447 880V391Q447 363 475 363Z" />
+  <path class="pc" d="M860 363H970Q998 363 998 391V548Q998 585 1032 604L1200 697Q1150 752 1116 832L935 726Q832 666 832 548V391Q832 363 860 363Z" />
+  <path class="pc" d="M1510 363H1620Q1648 363 1648 391V470Q1648 560 1565 608L1395 706Q1330 744 1330 820V1105Q1330 1133 1302 1133H1185Q1157 1133 1157 1105V860Q1157 702 1295 622L1448 534Q1482 512 1482 474V391Q1482 363 1510 363Z" />
+  <rect class="pc" x="1705" y="363" width="755" height="167" rx="28" />
+  <rect class="pc" x="1990" y="583" width="180" height="550" rx="28" />
+</svg>

@@ -1,0 +1,15 @@
+---
+interface Props { on?: boolean }
+const { on = false } = Astro.props;
+---
+<div class:list={["gshot has-scene", { "is-on": on }]} aria-hidden="true">
+  <div class="scene"><div class="steps">
+    <div class="step"><span class="sn">1</span><span class="sl">Sua marca na tela do cliente</span><i class="sline"></i>
+      <div class="sc home"><span class="sbar"><span>9:41</span><span>5G</span></span><div class="icons"><span><i></i>WhatsApp</span><span><i></i>Banco</span><span><i></i>Fotos</span><span class="me"><i>M</i>Movimento</span></div></div></div>
+    <div class="step"><span class="sn">2</span><span class="sl">Você fala direto com ele</span><i class="sline"></i>
+      <div class="sc push"><i class="ico">M</i><div><small class="app">Clínica Movimento · agora</small><b>Faz 30 dias da sua última sessão.</b><small>Que tal agendar a próxima? Toque para escolher o horário.</small></div></div></div>
+    <div class="step"><span class="sn">3</span><span class="sl">Ele volta em um toque</span>
+      <div class="sc"><div class="slots"><span>Qua 9h</span><span class="on">Qui 14h</span><span>Sex 18h</span></div><div class="late sync">✓ Sessão agendada para quinta, 14h</div></div>
+      <div class="won">✓ Seu cliente volta sem você precisar chamar</div></div>
+  </div></div>
+</div>

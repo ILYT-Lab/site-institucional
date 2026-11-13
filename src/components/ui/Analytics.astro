@@ -1,0 +1,56 @@
+---
+// Medição. Umami (sem cookies) roda sempre que estiver configurado.
+// Google Tag Manager (GA4, Google Ads, Meta, TikTok…) só carrega depois que o visitante aceita os cookies (LGPD).
+import { site } from '../../config/site';
+const { umamiSrc, umamiWebsiteId, gtmId } = site.analytics;
+---
+{umamiSrc && umamiWebsiteId && <script is:inline defer src={umamiSrc} data-website-id={umamiWebsiteId}></script>}
+
+{gtmId && (
+  <>
+    <div class="consent" id="consent" role="dialog" aria-live="polite" aria-label="Aviso de cookies" hidden>
+      <p>A gente usa cookies para medir os anúncios e melhorar o site. Você pode aceitar ou recusar. <a href="/politica-de-privacidade">Saiba mais</a>.</p>
+      <div class="consent-btns">
+        <button type="button" class="btn btn-ghost" data-consent="denied">Recusar</button>
+        <button type="button" class="btn btn-primary" data-consent="granted">Aceitar</button>
+      </div>
+    </div>
+    <script is:inline define:vars={{ gtmId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('consent', 'default', { ad_storage: 'denied', analytics_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', wait_for_update: 500 });
+      var KEY = 'ilyt-consent', loaded = false;
+      function read() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+      function load() {
+        if (loaded) return; loaded = true;
+        var v = 'granted';
+        gtag('consent', 'update', { ad_storage: v, analytics_storage: v, ad_user_data: v, ad_personalization: v });
+        dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+        var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtm.js?id=' + gtmId;
+        document.head.appendChild(s);
+      }
+      function choose(v) {
+        try { localStorage.setItem(KEY, v); } catch (e) {}
+        document.getElementById('consent').hidden = true;
+        if (v === 'granted') load();
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        var box = document.getElementById('consent');
+        box.addEventListener('click', function (e) { var b = e.target.closest('[data-consent]'); if (b) choose(b.getAttribute('data-consent')); });
+        document.querySelectorAll('[data-consent-open]').forEach(function (b) { b.addEventListener('click', function () { box.hidden = false; }); });
+        var c = read();
+        // a tag carrega depois que a página termina de abrir, para não pesar no carregamento
+        if (c === 'granted') addEventListener('load', function () { setTimeout(load, 1500); });
+        else if (!c) box.hidden = false;
+      });
+    </script>
+  </>
+)}
+
+<style is:global>
+  .consent { position: fixed; left: calc(16px + env(safe-area-inset-left, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 55; width: min(440px, calc(100vw - 32px)); display: grid; gap: 14px; padding: 18px; border-radius: var(--r-piece); border: 1px solid var(--line); background: var(--surface-raised); box-shadow: var(--shadow-piece); font-size: var(--fs-small); color: var(--ink-muted); }
+  .consent[hidden] { display: none; }
+  .consent p { margin: 0; }
+  .consent-btns { display: flex; gap: 8px; justify-content: flex-end; }
+  .consent .btn { padding: 12px 16px; font-size: 14px; }
+</style>

@@ -1,0 +1,10 @@
+---
+// Todo "Pedir diagnóstico" abre o WhatsApp. data-cta diz de onde veio o clique (medição de conversão).
+import WhatsAppIcon from './WhatsAppIcon.astro';
+import { whatsappUrl } from '../../config/site';
+interface Props { from: string; class?: string; icon?: boolean; label?: string }
+const { from, class: cls = 'btn btn-primary', icon = false, label = 'Pedir diagnóstico gratuito' } = Astro.props;
+---
+<a class={cls} href={whatsappUrl()} target="_blank" rel="noopener" data-cta={from}>
+  {icon && <WhatsAppIcon />}<span><slot>{label}</slot></span>
+</a>

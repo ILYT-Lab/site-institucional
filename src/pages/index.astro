@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/sections/Hero.astro';
+import Historia from '../components/sections/Historia.astro';
+import ComoTrabalha from '../components/sections/ComoTrabalha.astro';
+import Especialidades from '../components/sections/Especialidades.astro';
+import Garantia from '../components/sections/Garantia.astro';
+import Fundador from '../components/sections/Fundador.astro';
+import Projetos from '../components/sections/Projetos.astro';
+import Faq from '../components/sections/Faq.astro';
+import Contato from '../components/sections/Contato.astro';
+import { site } from '../config/site';
+import { faq } from '../content/faq';
+
+const title = 'ILYT | Sites, sistemas e aplicativos sob medida em BH';
+const description = 'Sites, sistemas, aplicativos e automações sob medida para empresas de BH e de todo o Brasil. Diagnóstico gratuito e proposta clara em até 48 horas.';
+
+const org = `${site.url}/#empresa`;
+const sameAs = Object.values(site.social).filter(Boolean);
+const schema = [
+  {
+    '@type': 'ProfessionalService',
+    '@id': org,
+    name: site.name,
+    url: site.url,
+    logo: `${site.url}/icon-512.png`,
+    image: `${site.url}/og.jpg`,
+    description,
+    email: site.email,
+    telephone: site.phoneE164,
+    address: { '@type': 'PostalAddress', addressLocality: site.city, addressRegion: site.region, addressCountry: 'BR' },
+    areaServed: [
+      { '@type': 'City', name: 'Belo Horizonte' },
+      { '@type': 'AdministrativeArea', name: 'Região Metropolitana de Belo Horizonte' },
+      { '@type': 'Country', name: 'Brasil' },
+    ],
+    founder: { '@type': 'Person', name: site.founder.name, jobTitle: site.founder.role },
+    knowsAbout: ['Criação de sites', 'Landing pages', 'Sistemas sob medida', 'CRM', 'Desenvolvimento de aplicativos', 'Automação de processos', 'Integrações', 'Inteligência artificial'],
+    ...(sameAs.length ? { sameAs } : {}),
+  },
+  { '@type': 'WebSite', '@id': `${site.url}/#site`, url: site.url, name: site.name, inLanguage: 'pt-BR', publisher: { '@id': org } },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Base home title={title} description={description} schema={[{ '@context': 'https://schema.org', '@graph': schema }]}>
+  <Hero />
+  <Historia />
+  <ComoTrabalha />
+  <Especialidades />
+  <Garantia />
+  <Fundador />
+  <Projetos />
+  <Faq />
+  <Contato />
+</Base>

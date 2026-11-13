@@ -1,0 +1,51 @@
+---
+const lines = [
+  'O prazo combinado que foi adiado uma, duas, três vezes.',
+  'A cobrança extra que não estava no contrato.',
+  'A reunião cheia de termos técnicos, e você saindo sem entender o que estava contratando.',
+  'A agência que entregou as senhas e sumiu quando você precisou de suporte.',
+  'O sistema que prometia facilitar o trabalho, mas era tão complicado que todo mundo voltou para a planilha.',
+];
+---
+<section class="band" id="historia">
+  <div class="wrap">
+    <div class="tale-grid">
+      <header>
+        <p class="eyebrow">A história que se repete</p>
+        <h2>Se você já contratou tecnologia antes, <span class="thin">talvez conheça esta história.</span></h2>
+      </header>
+      <ul class="tale">
+        {lines.map((l) => <li><span class="on">{l}</span></li>)}
+      </ul>
+    </div>
+    <div class="tale-end">
+      <p class="m">Mas se ainda não contratou, é disso que você precisa se proteger.</p>
+      <h3><span class="thin">Não é azar. É falta de método.</span><br /><span class="amb">A ILYT existe para trabalhar diferente.</span></h3>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  #historia { padding-top: 40px; }
+  /* cada linha é riscada conforme sobe na tela (script em src/scripts/motion.ts) */
+  .tale-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 64px; align-items: start; }
+  .tale-grid header { position: sticky; top: 120px; display: grid; gap: 22px; }
+  .tale { list-style: none; margin: 0; padding: 0; }
+  .tale li { padding: 28px 0; border-top: 1px solid var(--line); font: 300 clamp(19px, 1.8vw, 26px)/1.3 var(--font-display); letter-spacing: -.02em; }
+  .tale li:last-child { border-bottom: 1px solid var(--line); }
+  .tale li span { background: linear-gradient(var(--amber), var(--amber)) 0 58% / 0% 2px no-repeat; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background-size .9s cubic-bezier(.16, 1, .3, 1), color .9s; }
+  .tale li span.on { background-size: 100% 2px; color: var(--ink-muted); }
+  .tale-end { margin-top: clamp(36px, 4vw, 48px); display: grid; gap: 20px; max-width: 900px; }
+  .tale-end .m { color: var(--ink-muted); font: 300 clamp(19px, 1.8vw, 26px)/1.3 var(--font-display); letter-spacing: -.02em; margin: 0; }
+  .tale-end h3 { font: 600 clamp(26px, 2.6vw, 40px)/1.08 var(--font-display); letter-spacing: -.03em; }
+  .tale-end h3 .thin { font-weight: 300; }
+
+  @media (max-width: 1000px) {
+    #historia { padding-top: 32px; }
+    .tale-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    .tale-grid header { position: static; }
+  }
+  @media (max-width: 600px) {
+    #historia { padding-top: 24px; }
+  }
+</style>

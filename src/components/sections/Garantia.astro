@@ -1,0 +1,39 @@
+<section class="band light" id="garantia">
+  <div class="wrap risk">
+    <div>
+      <p class="eyebrow">Garantia</p>
+      <span class="days" aria-hidden="true">30<small>dias</small></span>
+      <h2>O risco é da ILYT, <span class="thin">não seu.</span></h2>
+      <p class="lead">Nos primeiros 30 dias depois da entrega, qualquer falha é corrigida sem custo, e pequenos ajustes no que foi combinado também estão incluídos.</p>
+      <p class="scope">Trocar um texto ou a ordem de um campo é ajuste. Recursos e funcionalidades fora do escopo contratado podem ser orçados a qualquer momento, e você decide se quer seguir.</p>
+    </div>
+    <div class="nopromise">
+      <h3>E o que a gente não promete</h3>
+      <p>Vendas garantidas. Elas também dependem do seu preço, do seu produto e do seu atendimento, e quem promete isso está vendendo o que não controla.</p>
+      <p>A gente promete o que controla: prazo, qualidade e uma solução para o problema certo.</p>
+      <div class="seals"><span><b>LGPD</b>seus dados e os dos seus clientes protegidos</span><span><b>90+</b>nota mínima no teste de velocidade do Google, em sites e landing pages</span></div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .risk { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 64px; align-items: end; }
+  .risk .days { display: block; font: 600 clamp(96px, 13vw, 190px)/.82 var(--font-display); letter-spacing: -.06em; color: var(--amber); margin: 28px 0 24px; }
+  .risk .days small { font-size: .22em; font-weight: 400; letter-spacing: 0; color: var(--ink); margin-left: 10px; }
+  .risk h2 { margin-bottom: 20px; }
+  .risk .scope { margin: 18px 0 0; max-width: 52ch; font-size: var(--fs-body); line-height: 1.6; color: var(--ink-muted); font-style: italic; padding-left: 14px; border-left: 2px solid var(--line); }
+  .nopromise { border: 1px solid var(--line); border-radius: var(--r-big); padding: 36px; background: var(--surface); }
+  .nopromise h3 { font: 600 20px/1.3 var(--font-display); margin-bottom: 14px; }
+  .nopromise p { margin: 0 0 14px; color: var(--ink-muted); }
+  .nopromise p:last-of-type { margin: 0; color: var(--ink); font-weight: 500; }
+  /* selos: prova para "prazo, qualidade" */
+  .seals { display: grid; gap: 10px; margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--ink-muted); font-size: var(--fs-body); }
+  .seals b { color: var(--ink); font: 500 var(--fs-label)/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; margin-right: 10px; }
+
+  @media (max-width: 1000px) {
+    .risk { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .nopromise { padding: 26px; }
+  }
+</style>

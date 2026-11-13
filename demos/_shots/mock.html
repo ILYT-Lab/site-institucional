@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1600px;height:1000px;overflow:hidden}
+body{background:#101012;position:relative}
+.glow{position:absolute;inset:0;background:radial-gradient(40% 50% at 88% 78%,var(--acc),transparent 70%),radial-gradient(45% 50% at 8% 0%,var(--acc),transparent 70%);opacity:.28}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(70% 70% at 50% 50%,#000,transparent)}
+.lap{position:absolute;left:110px;top:96px}
+.lap .scr{width:1151px;height:730px;padding:14px;background:#1b1b1e;border:1px solid #3a3a41;border-radius:20px 20px 6px 6px;box-shadow:0 50px 90px rgba(0,0,0,.55)}
+.lap .vp{width:1123px;height:702px;overflow:hidden;border-radius:6px;background:#fff}
+.lap iframe{width:1440px;height:900px;border:0;transform:scale(.7799);transform-origin:0 0}
+.lap .base{width:1291px;height:24px;margin-left:-70px;background:linear-gradient(#3a3a3f,#1e1e21);border-radius:2px 2px 16px 16px;position:relative}
+.lap .base::before{content:"";position:absolute;left:50%;top:0;width:160px;height:8px;margin-left:-80px;background:#151517;border-radius:0 0 10px 10px}
+.ph{position:absolute;right:100px;bottom:56px;width:301px;height:628px;padding:10px;background:#0c0c0e;border:1px solid #303035;border-radius:48px;box-shadow:0 40px 80px rgba(0,0,0,.6),inset 0 0 0 2px #1f1f23}
+.ph .vp{width:281px;height:608px;overflow:hidden;border-radius:38px;position:relative;background:#fff}
+.ph .sb{height:40px;background:var(--sb,#fff);color:var(--sbc,#111);display:flex;justify-content:space-between;align-items:center;padding:4px 26px 0 30px;font:600 12px -apple-system,'Segoe UI',sans-serif}
+.ph .sb i{font-style:normal;letter-spacing:1px}
+.ph iframe{width:390px;height:789px;border:0;transform:scale(.7205);transform-origin:0 0}
+.ph .isl{position:absolute;left:50%;top:9px;width:84px;height:24px;margin-left:-42px;background:#000;border-radius:20px;z-index:2}
+body.app .lap{display:none}
+body.app .ph{position:absolute;bottom:auto;top:110px;right:auto}
+</style></head>
+<body>
+<div class="glow"></div><div class="grid"></div>
+<div class="lap"><div class="scr"><div class="vp"><iframe id="d"></iframe></div></div><div class="base"></div></div>
+<div class="ph"><div class="vp"><span class="isl"></span><div class="sb"><span>9:41</span><i>●●● ▮</i></div><iframe id="m"></iframe></div></div>
+<script>
+const q=new URLSearchParams(location.search);
+document.body.style.setProperty('--acc',q.get('acc')||'#444');
+['sb','sbc'].forEach(k=>q.get(k)&&document.body.style.setProperty('--'+k,q.get(k)));
+document.getElementById('d').src=q.get('d')||q.get('src');
+document.getElementById('m').src=q.get('m')||q.get('src');
+</script>
+</body></html>

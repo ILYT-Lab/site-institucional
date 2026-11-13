@@ -1,0 +1,18 @@
+<!-- @dsCard group="Conteúdo" height=300 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.wrap{padding:24px;display:flex;flex-direction:column;gap:var(--space-2);max-width:720px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md)}
+summary{list-style:none;cursor:pointer;padding:20px 22px;display:flex;justify-content:space-between;gap:16px;font:500 17px/1.4 var(--font-sans)}
+summary::-webkit-details-marker{display:none}
+summary .pm{font:500 18px/1 var(--font-mono);color:var(--ink-muted);transition:transform var(--dur-base) var(--ease-out)}
+details[open] summary .pm{transform:rotate(45deg);color:var(--amber)}
+details p{margin:0;padding:0 22px 20px;color:var(--ink-muted);line-height:1.6}
+</style>
+<div class="wrap">
+<details open><summary>Quanto custa um projeto?<span class="pm">+</span></summary><p>Depende do que sua empresa precisa. Depois do diagnóstico, você recebe uma proposta com valor fechado, sem surpresa no meio do caminho.</p></details>
+<details><summary>Preciso entender de tecnologia?<span class="pm">+</span></summary><p>Não. A gente explica cada etapa em linguagem simples e você decide com clareza.</p></details>
+<details><summary>O site ou sistema fica sendo meu?<span class="pm">+</span></summary><p>Sim. O projeto, o domínio e os dados ficam no nome da sua empresa.</p></details>
+</div>

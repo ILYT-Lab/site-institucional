@@ -1,0 +1,16 @@
+---
+interface Props { on?: boolean }
+const { on = false } = Astro.props;
+---
+<div class:list={["gshot has-scene", { "is-on": on }]} aria-hidden="true">
+  <div class="scene"><div class="steps">
+    <div class="step"><span class="sn">1</span><span class="sl">Hoje, tudo espalhado</span><i class="sline"></i>
+      <div class="sc scat"><span>Planilha de clientes</span><span>Caderno de pedidos</span><span>Estoque no papel</span><span>Extrato do banco</span></div></div>
+    <div class="step"><span class="sn">2</span><span class="sl">Depois, tudo num sistema só</span><i class="sline"></i>
+      <div class="sc"><span class="url">Painel</span><div class="kpis"><div><small>Clientes ativos</small><b>248</b></div><div><small>Pedidos hoje</small><b>14</b></div><div><small>Estoque baixo</small><b>3 itens</b></div><div><small>A receber</small><b>R$ 18.430</b></div></div></div></div>
+    <div class="step"><span class="sn">3</span><span class="sl">Decisão com clareza</span>
+      <div class="sc"><div class="bars" aria-hidden="true"><i style="height:40%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:70%"></i><i style="height:62%"></i><i style="height:85%"></i><i class="hi" style="height:100%"></i></div>
+        <div class="late alert"><b>Caixas de 12 un. acabam em 2 dias</b><small>Pedidos +18% na semana · compra sugerida: 40 caixas</small></div></div>
+      <div class="won">✓ Os números do dia em um só lugar</div></div>
+  </div></div>
+</div>

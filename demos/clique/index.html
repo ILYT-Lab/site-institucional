@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clique · Fotografia com celular</title>
+<meta name="description" content="Curso online de fotografia com celular. 6 módulos práticos, acesso por 1 ano e garantia de 7 dias.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0c0b;--card:#171513;--ink:#f5efe6;--muted:#a39b90;--line:#2a2724;--acc:#ff6a2b;--acc2:#ffd6a8;--gut:clamp(20px,4.5vw,64px)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Archivo,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1320px;margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+.x{font-stretch:125%;font-weight:800;letter-spacing:-.035em;line-height:.92;text-transform:uppercase}
+.ph{position:relative;background:#1f1c19;border-radius:22px;overflow:hidden;display:flex;align-items:flex-end}
+.ph svg{position:absolute;inset:0;width:100%;height:100%;stroke:#3a3530;stroke-width:.4}
+.ph figcaption{position:relative;margin:12px;padding:9px 12px;background:rgba(13,12,11,.82);border-radius:10px;font-size:12px;line-height:1.4;color:var(--muted);max-width:300px}
+.ph figcaption b{display:block;color:var(--ink);font-weight:600}
+.bar{background:var(--acc);color:#140a04;text-align:center;font-weight:700;font-size:13px;padding:9px var(--gut);letter-spacing:.02em}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:78px}
+.logo{font-stretch:125%;font-weight:900;font-size:22px;letter-spacing:-.04em;display:flex;align-items:center;gap:8px}
+.logo i{width:22px;height:22px;border-radius:50%;border:3px solid var(--acc);position:relative}
+.logo i::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--acc)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:14px;padding:18px 28px;font-weight:800;font-size:16px;background:var(--acc);color:#140a04;box-shadow:0 12px 40px rgba(255,106,43,.35)}
+.btn.sm{padding:12px 18px;font-size:14px;box-shadow:none}
+.hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:56px;align-items:center;padding-top:24px;padding-bottom:96px}
+.tag{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:99px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--acc2)}
+.tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 4px rgba(255,106,43,.2)}
+.hero h1{font-size:clamp(40px,4.9vw,74px);margin:22px 0 22px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero .lead{font-size:19px;color:var(--muted);max-width:520px}
+.buy{display:flex;align-items:center;gap:22px;margin-top:34px;flex-wrap:wrap}
+.price small{display:block;color:var(--muted);font-size:13px}
+.price b{font-size:22px;font-stretch:110%}
+.count{display:flex;gap:8px;margin-top:34px}
+.count div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 0;width:74px;text-align:center}
+.count b{display:block;font-stretch:125%;font-size:26px;font-weight:800;line-height:1.1}
+.count span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.visual{position:relative}
+.visual .ph{aspect-ratio:4/5;align-items:flex-start}
+.badge{position:absolute;left:-34px;bottom:46px;background:var(--ink);color:var(--bg);border-radius:18px;padding:16px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 30px 60px rgba(0,0,0,.4)}
+.badge b{display:block;font-stretch:125%;font-size:24px;font-weight:900;line-height:1}
+.badge span{font-size:13px;color:#5d564d}
+.badge .st{color:var(--acc);font-size:15px;letter-spacing:2px}
+.badge2{position:absolute;right:-18px;top:64px;background:var(--acc);color:#140a04;border-radius:99px;padding:10px 16px;font-weight:800;font-size:13px;transform:rotate(6deg)}
+section{padding:110px 0}
+.sh{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:48px}
+.sh h2{font-size:clamp(36px,4.8vw,68px)}
+.sh p{color:var(--muted);max-width:380px}
+.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.mod{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;min-height:220px;display:flex;flex-direction:column}
+.mod span{color:var(--acc);font-weight:800;font-stretch:125%}
+.mod h3{font-size:22px;font-stretch:110%;margin:auto 0 8px}
+.mod p{color:var(--muted);font-size:15px}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ba .ph{aspect-ratio:4/3}
+.ba .ph::before{content:attr(data-l);position:absolute;top:16px;left:16px;z-index:2;background:var(--ink);color:var(--bg);font-weight:800;font-size:12px;padding:6px 10px;border-radius:8px;text-transform:uppercase;letter-spacing:.06em}
+.ba .ph figcaption{margin-top:auto}
+.deps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.dep{border:1px solid var(--line);border-radius:22px;padding:26px}
+.dep p{font-size:18px;line-height:1.45}
+.dep cite{display:flex;align-items:center;gap:12px;margin-top:22px;font-style:normal;color:var(--muted);font-size:14px}
+.dep cite i{width:38px;height:38px;border-radius:50%;background:#2b2622}
+.offer{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:32px;padding:64px}
+.offer h2{font-size:clamp(36px,4.4vw,60px)}
+.offer ul{list-style:none;margin-top:26px;display:grid;gap:12px;color:var(--muted)}
+.offer li::before{content:"✓";color:var(--acc);font-weight:800;margin-right:12px}
+.pcard{background:var(--bg);border:1px solid var(--line);border-radius:24px;padding:36px;text-align:center}
+.pcard s{color:var(--muted)}
+.pcard .big{font-stretch:125%;font-weight:900;font-size:64px;letter-spacing:-.04em;line-height:1;margin:8px 0}
+.pcard .btn{width:100%;margin:24px 0 16px}
+.pcard small{color:var(--muted)}
+footer{padding:40px 0;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+@media (max-width:1000px){
+  header .btn{display:none}
+  .hero{grid-template-columns:minmax(0,1fr);gap:40px;padding-bottom:72px}
+  .badge{left:12px}.badge2{right:12px}
+  .sh{flex-direction:column;align-items:start}
+  .mods,.deps{grid-template-columns:1fr}
+  .mod{min-height:0}.mod h3{margin-top:22px}
+  .ba{grid-template-columns:1fr}
+  .offer{grid-template-columns:1fr;padding:32px 20px;gap:32px;border-radius:24px}
+  section{padding:80px 0}
+}
+@media (max-width:600px){
+  .hero{padding-top:12px}
+  .hero h1{font-size:9vw;margin:18px 0}
+  .hero .lead{font-size:17px}
+  .buy .btn{width:100%}
+  .pcard .big{font-size:48px}
+  .count{margin-top:24px}.count div{flex:1;width:auto}
+}
+</style>
+</head>
+<body>
+<div class="bar">Turma 07 · inscrições com desconto até domingo, 23h59</div>
+<header><div class="wrap"><a class="logo" href="#"><i></i>clique</a><a class="btn sm" href="#oferta">Garantir vaga</a></div></header>
+<main>
+  <div class="wrap hero">
+    <div>
+      <span class="tag">Curso online · 100% prático</span>
+      <h1 class="x">Fotos profissionais com o celular que já está no <em>seu bolso.</em></h1>
+      <p class="lead">Em 6 módulos curtos, você aprende luz, enquadramento e edição para fotografar seus produtos, seu trabalho e sua família como um profissional.</p>
+      <div class="buy"><a class="btn" href="#oferta">Quero minha vaga →</a><div class="price"><small>12x de</small><b>R$ 39,70</b></div></div>
+      <div class="count"><div><b>02</b><span>dias</span></div><div><b>14</b><span>horas</span></div><div><b>37</b><span>min</span></div><div><b>08</b><span>seg</span></div></div>
+    </div>
+    <div class="visual">
+      <figure class="ph"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100"/><line x1="100" y1="0" x2="0" y2="100"/></svg><figcaption><b>CLQ-01 · 4:5 · 1200×1500</b>Fotógrafa segurando o celular na horizontal, fotografando prato de comida em mesa de madeira, luz de janela lateral.</figcaption></figure>
+      <span class="badge2">−40% só nesta turma</span>
+      <div class="badge"><div><b>3.200+</b><span>alunos formados</span></div><div><span class="st">★★★★★</span><span>4,9 de média</span></div></div>
+    </div>
+  </div>
+
+  <section style="padding-top:0"><div class="wrap">
+    <div class="sh"><h2 class="x">O que você vai aprender</h2><p>Aulas de até 15 minutos para assistir no intervalo e praticar no mesmo dia.</p></div>
+    <div class="mods">
+      <div class="mod"><span>01</span><h3>Luz natural</h3><p>Como usar a janela e a hora do dia a seu favor.</p></div>
+      <div class="mod"><span>02</span><h3>Enquadramento</h3><p>Regras simples que deixam qualquer foto mais bonita.</p></div>
+      <div class="mod"><span>03</span><h3>Modo manual</h3><p>Foco, exposição e o que cada ajuste realmente faz.</p></div>
+      <div class="mod"><span>04</span><h3>Produtos</h3><p>Fundo, ângulo e cenário para vender mais pelo Instagram.</p></div>
+      <div class="mod"><span>05</span><h3>Retratos</h3><p>Pessoas naturais, sem pose forçada.</p></div>
+      <div class="mod"><span>06</span><h3>Edição no app</h3><p>Um fluxo de 3 minutos do arquivo bruto à foto pronta.</p></div>
+    </div>
+  </div></section>
+
+  <section style="padding-top:0"><div class="wrap">
+    <div class="sh"><h2 class="x">Antes e depois</h2><p>Mesmo celular, mesmo produto. Só mudou a técnica.</p></div>
+    <div class="ba">
+      <figure class="ph" data-l="Antes"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100"/><line x1="100" y1="0" x2="0" y2="100"/></svg><figcaption><b>CLQ-02 · 4:3 · 1200×900</b>Foto amadora de bolo em cima da pia, luz amarela do teto, fundo bagunçado.</figcaption></figure>
+      <figure class="ph" data-l="Depois"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100"/><line x1="100" y1="0" x2="0" y2="100"/></svg><figcaption><b>CLQ-03 · 4:3 · 1200×900</b>O mesmo bolo em mesa de madeira, luz de janela, fundo limpo e desfocado.</figcaption></figure>
+    </div>
+  </div></section>
+
+  <section style="padding-top:0"><div class="wrap">
+    <div class="sh"><h2 class="x">Quem já fez</h2></div>
+    <div class="deps">
+      <div class="dep"><p>“Minhas vendas de doces no Instagram dobraram depois que troquei as fotos.”</p><cite><i></i>Renata · confeiteira</cite></div>
+      <div class="dep"><p>“Achei que precisava de câmera. Precisava só entender a luz.”</p><cite><i></i>Pedro · arquiteto</cite></div>
+      <div class="dep"><p>“Aulas curtas, diretas. Fiz tudo no horário de almoço.”</p><cite><i></i>Camila · loja de roupas</cite></div>
+    </div>
+  </div></section>
+
+  <section id="oferta" style="padding-top:0"><div class="wrap">
+    <div class="offer">
+      <div><h2 class="x">Tudo o que está incluído</h2>
+        <ul><li>6 módulos com 42 aulas práticas</li><li>Acesso por 1 ano, no celular ou computador</li><li>Grupo de alunos com correção de fotos</li><li>Pacote de 30 filtros de edição</li><li>Certificado de conclusão</li></ul>
+      </div>
+      <div class="pcard"><s>De R$ 667</s><div class="big">R$ 397</div><span>ou 12x de R$ 39,70</span><a class="btn" href="#">Quero minha vaga →</a><small>Garantia de 7 dias: não gostou, devolvemos 100%.</small></div>
+    </div>
+  </div></section>
+</main>
+<footer><div class="wrap"><span>clique · Escola de fotografia</span><span>Termos · Privacidade</span></div></footer>
+</body>
+</html>

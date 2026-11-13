@@ -1,0 +1,33 @@
+---
+import ArtPicture from '../ui/ArtPicture.astro';
+import WhatsAppButton from '../ui/WhatsAppButton.astro';
+import foto from '../../assets/img/contato.jpg';
+import fotoMobile from '../../assets/img/contato-mobile.jpg';
+---
+<section class="final" id="contato">
+  <div class="ph fill">
+    <ArtPicture src={foto} mobile={fotoMobile} media="(max-width: 1000px)" widths={[1280, 1920, 2880]} mobileWidths={[480, 768, 1080, 1746]} />
+  </div>
+  <div class="wrap final-in">
+    <p class="eyebrow">Diagnóstico gratuito</p>
+    <h2>Conta pra gente o que está travando <span class="thin">na sua empresa.</span></h2>
+    <p class="lead">Uma conversa de 30 minutos, por vídeo ou pelo WhatsApp. Em até 48 horas você recebe por escrito como a gente resolveria, em quanto tempo e por quanto. Se não fizer sentido, tudo bem: você sai da conversa sabendo mais do que entrou.</p>
+    <div class="ctas" style="margin-top:32px"><WhatsAppButton from="contato" icon /></div>
+  </div>
+</section>
+
+<style is:global>
+  .final { position: relative; min-height: clamp(560px, 80svh, 860px); display: flex; align-items: center; isolation: isolate; }
+  .final .ph.fill::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #0a0a0b 0%, rgba(10, 10, 11, .85) 38%, rgba(10, 10, 11, 0) 75%); }
+  /* a imagem já tem o lado esquerdo escuro e vazio para o texto; o aperto de mão fica à direita */
+  .final .ph img { object-position: 100% 50%; }
+  .final-in { position: relative; z-index: 3; width: 100%; }
+  .final h2 { font-size: clamp(30px, 3.2vw, 52px); line-height: .98; letter-spacing: -.04em; max-width: 13ch; margin: 22px 0 28px; }
+
+  @media (max-width: 1000px) {
+    /* faixa da imagem em cima (altura --fi), texto embaixo sobre fundo escuro */
+    .final { --fi: min(78vw, 560px); min-height: 0; align-items: flex-end; padding: var(--fi) 0 72px; }
+    .final .ph img { height: min(93vw, 667px); object-position: 50% 50%; -webkit-mask-image: linear-gradient(180deg, #000 75%, transparent); mask-image: linear-gradient(180deg, #000 75%, transparent); }
+    .final .ph.fill::after { background: linear-gradient(180deg, rgba(10, 10, 11, .25) 0%, rgba(10, 10, 11, 0) 15%, rgba(10, 10, 11, 0) calc(var(--fi) - 100px), #0a0a0b calc(var(--fi) + 60px)); }
+  }
+</style>

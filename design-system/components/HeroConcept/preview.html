@@ -1,0 +1,80 @@
+<!-- @dsCard group="Motion" height=600 width=1100 subtitle="Conceito do hero: a fábrica montando a solução ao vivo" -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600&family=Onest:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-sans); }
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; padding: 56px 48px; }
+  .eyebrow { font: 500 12px/1.4 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); display: flex; gap: 8px; align-items: center; }
+  .eyebrow i { width: 8px; height: 8px; border-radius: 999px; background: var(--amber); display: inline-block; }
+  h1 { font: 600 56px/0.98 var(--font-display); letter-spacing: -0.03em; margin: 20px 0 0; text-wrap: balance; }
+  h1 .line { display: block; }
+  h1 .dim { color: var(--ink-muted); }
+  p { font-size: 18px; line-height: 1.6; color: var(--ink-muted); max-width: 46ch; margin: 24px 0 32px; }
+  .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { font: 600 15px/1 var(--font-sans); border-radius: 12px; padding: 16px 22px; text-decoration: none; display: inline-flex; gap: 8px; align-items: center; }
+  .btn-primary { background: var(--amber); color: var(--on-amber); }
+  .btn-ghost { color: var(--ink); border: 1px solid var(--line-strong); }
+  .board { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 150px 150px; gap: 8px; }
+  .piece { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow-piece); padding: 18px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+  .piece .tag { font: 500 10px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); }
+  .site { grid-column: 1 / 3; }
+  .dots { display: flex; gap: 5px; } .dots b { width: 7px; height: 7px; border-radius: 99px; background: var(--line-strong); }
+  .bar { height: 10px; border-radius: 6px; background: var(--surface-raised); }
+  .bar.ink { background: var(--ink); width: 55%; height: 14px; }
+  .bar.amb { background: var(--amber); width: 28%; height: 22px; border-radius: 8px; }
+  .row { display: flex; gap: 8px; align-items: center; } .row .bar { flex: 1; }
+  .av { width: 18px; height: 18px; border-radius: 99px; background: var(--surface-raised); flex: none; }
+  .chart { display: flex; align-items: flex-end; gap: 6px; height: 70px; }
+  .chart b { flex: 1; border-radius: 4px 4px 0 0; background: var(--surface-raised); }
+  .chart b:last-child { background: var(--amber); }
+  .cursor { position: absolute; left: 0; top: 0; display: flex; gap: 2px; opacity: 0; pointer-events: none; z-index: 3; }
+  .cursor svg { width: 18px; height: 18px; } .cursor path { fill: var(--amber); stroke: var(--bg); stroke-width: 1.5; }
+  .cursor span { margin-top: 14px; background: var(--amber); color: var(--on-amber); font: 500 11px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; padding: 5px 8px; border-radius: 999px; white-space: nowrap; }
+  .status { position: absolute; right: 0; bottom: -34px; font: 400 13px/1 var(--font-mono); color: var(--ink-muted); }
+  .status em { color: var(--success); font-style: normal; }
+  .replay { margin-top: 28px; font: 500 11px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; background: none; border: 0; color: var(--ink-muted); cursor: pointer; padding: 0; }
+  .replay:focus-visible, .btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+</style>
+<section class="hero">
+  <div>
+    <div class="eyebrow"><i></i>Fábrica de soluções digitais</div>
+    <h1><span class="line">Sua empresa trabalha duro.</span><span class="line dim">A tecnologia deveria trabalhar junto.</span></h1>
+    <p>A ILYT cria sites, landing pages, sistemas, CRMs e aplicativos para pequenas e médias empresas. Cada projeto tem um único objetivo: gerar resultado para o seu negócio.</p>
+    <div class="ctas"><a class="btn btn-primary" href="#">Falar no WhatsApp</a><a class="btn btn-ghost" href="#">Ver portfólio →</a></div>
+    <button class="replay" id="replay" type="button">↻ Montar de novo</button>
+  </div>
+  <div class="board" id="board">
+    <div class="piece site"><div class="dots"><b></b><b></b><b></b></div><span class="tag">site</span><div class="bar ink"></div><div class="bar" style="width:80%"></div><div class="bar amb"></div></div>
+    <div class="piece"><span class="tag">crm</span><div class="row"><i class="av"></i><div class="bar"></div></div><div class="row"><i class="av"></i><div class="bar" style="max-width:70%"></div></div><div class="row"><i class="av"></i><div class="bar" style="max-width:85%"></div></div></div>
+    <div class="piece"><span class="tag">resultado</span><div class="chart"><b style="height:30%"></b><b style="height:45%"></b><b style="height:40%"></b><b style="height:65%"></b><b style="height:90%"></b></div></div>
+    <div class="status" id="status">status: <em>no ar ✓</em></div>
+  </div>
+</section>
+<script>
+(() => {
+  const board = document.getElementById('board');
+  const pieces = [...board.querySelectorAll('.piece')];
+  const lines = [...document.querySelectorAll('h1 .line')];
+  const status = document.getElementById('status');
+  const from = [[-40, -120, -6], [140, 60, 8], [-120, 140, -10]];
+  const labels = ['design', 'código', 'dados'];
+  const cursors = labels.map(l => { const c = document.createElement('div'); c.className = 'cursor'; c.innerHTML = '<svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 1.5 L15 8.5 L9 10 L6.5 16 Z"/></svg><span>' + l + '</span>'; board.appendChild(c); return c; });
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const SNAP = 'cubic-bezier(0.2, 0.9, 0.2, 1.15)', OUT = 'cubic-bezier(0.16, 1, 0.3, 1)';
+  let anims = [];
+  function play() {
+    anims.forEach(a => a.cancel()); anims = [];
+    if (reduce) return;
+    lines.forEach((l, i) => anims.push(l.animate([{ transform: 'translateY(16px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 700, delay: i * 140, easing: OUT, fill: 'backwards' })));
+    const b = board.getBoundingClientRect();
+    pieces.forEach((p, i) => {
+      const r = p.getBoundingClientRect(); const [dx, dy, rot] = from[i]; const delay = 350 + i * 380;
+      anims.push(p.animate([{ transform: `translate(${dx}px, ${dy}px) rotate(${rot}deg)`, opacity: 0 }, { opacity: 1, offset: .2 }, { transform: 'none', opacity: 1 }], { duration: 700, delay, easing: SNAP, fill: 'backwards' }));
+      const tx = r.left - b.left + r.width * .62, ty = r.top - b.top + r.height * .55;
+      anims.push(cursors[i].animate([{ transform: `translate(${tx + dx}px, ${ty + dy}px)`, opacity: 0 }, { opacity: 1, offset: .2 }, { transform: `translate(${tx}px, ${ty}px)`, opacity: 1, offset: .8 }, { transform: `translate(${tx + 12}px, ${ty + 16}px)`, opacity: 0 }], { duration: 1000, delay, easing: OUT, fill: 'both' }));
+    });
+    anims.push(status.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: 350 + 3 * 380 + 300, fill: 'backwards' }));
+  }
+  document.getElementById('replay').addEventListener('click', play);
+  requestAnimationFrame(play);
+})();
+</script>

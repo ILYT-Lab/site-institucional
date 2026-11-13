@@ -1,0 +1,22 @@
+<!-- @dsCard group="Navegação" height=130 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&display=swap">
+<style>
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.nav{margin:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:10px 10px 10px 16px;border:1px solid var(--line);border-radius:var(--radius-piece);background:var(--surface)}
+.brand{display:block;width:96px;height:33px;overflow:hidden;position:relative}
+.brand img{position:absolute;width:110px;max-width:none;left:-9px;top:-15px}
+.v-dark{mix-blend-mode:screen}
+.v-light{display:none;mix-blend-mode:multiply}
+[data-theme="light"] .v-dark{display:none}
+[data-theme="light"] .v-light{display:block}
+.links{display:flex;gap:4px;flex-wrap:wrap}
+.links a{color:var(--ink-muted);text-decoration:none;font:500 15px/1 var(--font-sans);padding:12px 14px;border-radius:var(--radius-md)}
+.links a:hover,.links a.on{color:var(--ink);background:var(--surface-raised)}
+.cta{background:var(--amber);color:var(--on-amber);font:600 14px/1 var(--font-sans);padding:13px 18px;border-radius:var(--radius-md);text-decoration:none}
+</style>
+<nav class="nav" aria-label="Principal">
+<a class="brand" href="#" aria-label="ILYT, início"><img class="v-dark" src="/_blob/7065e7fa46a1e9cdf4270d0d5cf4432f" alt=""><img class="v-light" src="/_blob/c571db795b59381b548942ccf0947c2a" alt=""></a>
+<div class="links"><a class="on" href="#">Início</a><a href="#">Serviços</a><a href="#">Portfólio</a><a href="#">Sobre</a></div>
+<a class="cta" href="#">Falar no WhatsApp</a>
+</nav>

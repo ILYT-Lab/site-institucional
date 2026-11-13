@@ -1,0 +1,70 @@
+---
+import Logo from './Logo.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+
+const links = [
+  { href: '#como-funciona', label: 'Como funciona' },
+  { href: '#solucoes', label: 'Soluções' },
+  { href: '#projetos', label: 'Projetos' },
+  { href: '#sobre', label: 'Sobre' },
+  { href: '#duvidas', label: 'Dúvidas' },
+];
+// fora da home, os links apontam para as seções da home
+interface Props { home?: boolean }
+const base = Astro.props.home ? '' : '/';
+---
+<div class="nav-shell">
+  <div class="wrap">
+    <nav class="nav" aria-label="Principal">
+      <a class="brand" href={base || '#conteudo'} aria-label="ILYT, página inicial"><Logo title="ILYT" /></a>
+      <div class="nav-links">
+        {links.map((l) => <a href={base + l.href}>{l.label}</a>)}
+      </div>
+      <WhatsAppButton from="menu-topo" icon label="Pedir diagnóstico" />
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel" aria-label="Abrir menu"><i></i><i></i></button>
+    </nav>
+  </div>
+</div>
+<div class="menu-panel" id="menuPanel" hidden>
+  <nav class="menu-links" aria-label="Menu">
+    {links.map((l, i) => <a href={base + l.href}><small>{String(i + 1).padStart(2, '0')}</small>{l.label}</a>)}
+  </nav>
+  <WhatsAppButton from="menu-celular" icon />
+</div>
+
+<style is:global>
+  .nav-shell { position: fixed; left: 0; right: 0; top: env(safe-area-inset-top, 0px); z-index: 50; padding-top: 16px; }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 8px 8px 18px; border-radius: var(--r-piece); border: 1px solid rgba(255, 255, 255, .08); background: rgba(10, 10, 11, .55); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  .brand { flex: none; display: block; color: #fff; }
+  .brand svg { display: block; height: 28px; width: auto; }
+  .nav-links { display: flex; gap: 2px; }
+  .nav-links a { text-decoration: none; color: var(--ink-muted); font: 500 15px/1 var(--font-sans); padding: 12px 14px; border-radius: var(--r-md); }
+  .nav-links a:hover { color: var(--ink); background: rgba(255, 255, 255, .06); }
+  .nav .btn { padding: 13px 18px; font-size: 14px; }
+
+  /* menu do celular: duas barras que viram um X */
+  .menu-btn { display: none; position: relative; flex: none; width: 48px; height: 48px; border-radius: var(--r-md); border: 1px solid rgba(255, 255, 255, .12); background: rgba(255, 255, 255, .04); cursor: pointer; }
+  .menu-btn i { position: absolute; left: 14px; right: 14px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform .32s cubic-bezier(.2, .9, .2, 1.15); }
+  .menu-btn i:first-child { top: 19px; }
+  .menu-btn i:last-child { top: 27px; }
+  .menu-btn[aria-expanded="true"] i:first-child { transform: translateY(4px) rotate(45deg); }
+  .menu-btn[aria-expanded="true"] i:last-child { transform: translateY(-4px) rotate(-45deg); }
+
+  /* painel do menu: 8px abaixo da barra (posição definida pelo script ao abrir), 16px da borda de baixo.
+     Os links ocupam o espaço livre (e rolam se precisar); o botão fica na última linha. */
+  .menu-panel { position: fixed; z-index: 49; top: var(--menu-top, 90px); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); left: var(--menu-left, 16px); right: var(--menu-right, 16px);
+    display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 16px; padding: 8px 16px 16px;
+    border-radius: var(--r-piece); border: 1px solid rgba(255, 255, 255, .08); background: rgba(10, 10, 11, .94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  .menu-panel[hidden] { display: none; }
+  .menu-links { overflow-y: auto; overscroll-behavior: contain; }
+  .menu-links a { display: flex; align-items: baseline; gap: 14px; padding: 16px 6px; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--ink); font: 500 18px/1.2 var(--font-display); letter-spacing: -.02em; }
+  .menu-links small { font: 500 11px/1 var(--font-mono); letter-spacing: .08em; color: var(--amber); }
+  .menu-panel .btn { justify-content: center; }
+  .menu-panel.opening { animation: menu-in .2s ease-out; }
+  @keyframes menu-in { from { opacity: 0; } }
+
+  @media (max-width: 1000px) {
+    .nav-links, .nav > .btn { display: none; }
+    .menu-btn { display: block; }
+  }
+</style>

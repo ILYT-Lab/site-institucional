@@ -1,0 +1,27 @@
+<!-- @dsCard height=320 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600&family=Onest:wght@400&display=swap">
+<style>
+  body { margin: 0; background: var(--bg); }
+  .cover { position: relative; width: 960px; height: 320px; background: var(--bg); overflow: hidden; }
+  svg { position: absolute; left: 480px; top: 0; width: 480px; height: 320px; }
+  .ink { fill: var(--ink); } .amber { fill: var(--amber); } .raised { fill: var(--surface-raised); } .surface { fill: var(--surface); stroke: var(--line); }
+  .txt { position: absolute; left: 48px; bottom: 44px; max-width: 420px; }
+  .name { font: 600 120px/0.92 var(--font-display); letter-spacing: -0.04em; color: var(--ink); margin: 0; }
+  .tag { font: 400 14px/1.4 var(--font-sans); color: var(--ink-muted); margin: 16px 0 0; }
+</style>
+<div class="cover">
+  <svg viewBox="0 0 480 320" aria-hidden="true">
+    <!-- blocks: ink 136x232 slab, amber 136x96, raised 288x96 bar, surface pieces; arrangement: modular pieces like the logo, separated by the 8px cut (space-2) -->
+    <!-- pattern row: geometric/modular — the logo is built from rounded bars, so the cover is bars cut by radius-piece with space-2 gaps -->
+    <!-- steps: space-2 (8px) gaps, space-8 (32px) top margin; radii: radius-piece (24px) -->
+    <rect class="ink" x="40" y="32" width="136" height="232" rx="24"/>
+    <rect class="raised" x="184" y="32" width="288" height="96" rx="24"/>
+    <rect class="amber" x="184" y="136" width="136" height="96" rx="24"/>
+    <rect class="surface" x="328" y="136" width="144" height="216" rx="24"/>
+    <rect class="raised" x="40" y="272" width="280" height="80" rx="24"/>
+  </svg>
+  <div class="txt">
+    <p class="name">ILYT</p>
+    <p class="tag">Fábrica de soluções digitais para pequenas e médias empresas.</p>
+  </div>
+</div>

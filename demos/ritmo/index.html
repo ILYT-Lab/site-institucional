@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ritmo · Agendamento de aulas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5efe7;--card:#fffaf4;--ink:#2a1f1a;--muted:#8a7b70;--line:#e8ddd0;--acc:#c4553b;--acc-soft:#f6ddd3;--sage:#6f8a6b;--sage-soft:#e3eadf}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased;max-width:480px;margin:0 auto;min-height:100vh;position:relative}
+.s{display:none;padding:12px 20px 110px}
+body[data-s=home] #home,body[data-s=agenda] #agenda,body[data-s=ok] #ok{display:block}
+.serif{font-family:Fraunces,Georgia,serif;font-weight:500;letter-spacing:-.02em}
+.hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.hd .av{width:40px;height:40px;border-radius:50%;background:#e6cfc0;display:grid;place-items:center;font-weight:700;color:var(--acc)}
+.hd .bell{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;position:relative}
+.hd .bell.nd::after{display:none}
+.hd .bell::after{content:"";position:absolute;top:9px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--acc);border:2px solid var(--bg)}
+svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+h1{font-size:30px;line-height:1.1;margin-bottom:6px}
+.sub{color:var(--muted);margin-bottom:22px}
+.next{background:var(--ink);color:#fff;border-radius:26px;padding:22px;position:relative;overflow:hidden}
+.next::before{content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,#c4553b 0%,transparent 70%);opacity:.7}
+.next small{color:#d9c8bb;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;position:relative}
+.next h2{font-size:26px;margin:10px 0 4px;position:relative}
+.next p{color:#d9c8bb;position:relative}
+.next .row{display:flex;align-items:center;justify-content:space-between;margin-top:22px;position:relative}
+.inst{display:flex;align-items:center;gap:10px;font-size:13px}
+.inst i{width:32px;height:32px;border-radius:50%;background:#e6cfc0;display:grid;place-items:center;font-style:normal;font-weight:700;color:var(--acc);font-size:12px}
+.pbtn{background:#fff;color:var(--ink);border-radius:99px;padding:11px 18px;font-weight:700;font-size:13px}
+.sec{display:flex;align-items:baseline;justify-content:space-between;margin:26px 0 12px}
+.sec h3{font-size:19px}.sec a{color:var(--acc);font-weight:700;font-size:13px;text-decoration:none}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px}
+.plan .t{display:flex;justify-content:space-between;font-weight:600}
+.plan .t span{color:var(--muted);font-weight:500}
+.dots{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin-top:14px}
+.dots i{height:8px;border-radius:9px;background:var(--line)}.dots i.on{background:var(--sage)}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cat{border-radius:22px;padding:16px;min-height:112px;display:flex;flex-direction:column;justify-content:space-between}
+.cat b{font-size:16px}.cat span{font-size:12px;color:var(--muted)}
+.c1{background:var(--acc-soft)}.c2{background:var(--sage-soft)}
+.cat .ic{width:36px;height:36px;border-radius:12px;background:rgba(255,255,255,.6);display:grid;place-items:center}
+
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:22px}
+.week div{text-align:center;padding:10px 0;border-radius:16px;font-size:12px;color:var(--muted);font-weight:600}
+.week b{display:block;font-size:17px;color:var(--ink);margin-top:4px}
+.week .on{background:var(--ink);color:#d9c8bb}.week .on b{color:#fff}
+.filters{display:flex;gap:8px;margin-bottom:16px}
+.filters span{border:1px solid var(--line);border-radius:99px;padding:8px 14px;font-weight:600;font-size:12.5px;color:var(--muted)}
+.filters .on{background:var(--acc-soft);border-color:transparent;color:var(--acc)}
+.cls{display:grid;grid-template-columns:52px 1fr auto;gap:14px;align-items:center;padding:16px;border-radius:22px;background:var(--card);border:1px solid var(--line);margin-bottom:10px}
+.cls .h{font-weight:700;font-size:16px}.cls .h small{display:block;color:var(--muted);font-weight:500;font-size:11.5px}
+.cls b{display:block;font-size:15px}.cls span{color:var(--muted);font-size:12.5px}
+.cls em{font-style:normal;font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:99px;background:var(--sage-soft);color:var(--sage)}
+.cls em.full{background:#efe8e0;color:var(--muted)}
+.cls.sel{border:2px solid var(--acc);background:#fff}
+.cls.sel em{background:var(--acc);color:#fff}
+.cta{position:fixed;left:50%;transform:translateX(-50%);width:calc(100% - 40px);max-width:440px;bottom:104px;background:var(--acc);color:#fff;text-align:center;border-radius:99px;padding:16px;font-weight:700;font-size:15px;box-shadow:0 14px 30px rgba(196,85,59,.35)}
+
+.okc{text-align:center;padding-top:30px}
+.check{width:88px;height:88px;border-radius:50%;background:var(--sage);display:grid;place-items:center;margin:0 auto 22px;box-shadow:0 0 0 12px var(--sage-soft)}
+.check svg{width:40px;height:40px;stroke:#fff;stroke-width:2.6}
+.okc h1{font-size:32px}
+.tk{background:var(--card);border:1px solid var(--line);border-radius:24px;margin-top:26px;text-align:left;overflow:hidden}
+.tk .r{display:flex;justify-content:space-between;padding:14px 18px;border-bottom:1px dashed var(--line)}
+.tk .r:last-child{border:0}
+.tk .r span{color:var(--muted)}.tk .r b{font-weight:700}
+.opt{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 18px;margin-top:10px;text-align:left}
+.opt b{display:block}.opt span{color:var(--muted);font-size:12.5px}
+.tg{width:46px;height:28px;border-radius:99px;background:var(--sage);position:relative;flex:none}
+.tg::after{content:"";position:absolute;right:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff}
+.ghost{margin-top:18px;border:1.5px solid var(--ink);border-radius:99px;padding:15px;font-weight:700;text-align:center}
+
+.tab{position:fixed;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:448px;bottom:20px;background:var(--card);border:1px solid var(--line);border-radius:26px;display:grid;grid-template-columns:repeat(4,1fr);padding:12px 6px;box-shadow:0 10px 30px rgba(42,31,26,.08)}
+.tab a{display:grid;justify-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--muted);text-decoration:none}
+.tab a.on{color:var(--acc)}
+</style>
+</head>
+<body>
+<section class="s" id="home">
+  <div class="hd"><span class="av">C</span><span class="bell"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></svg></span></div>
+  <h1 class="serif">Boa tarde, Camila</h1>
+  <p class="sub">Sua próxima aula é daqui a 2 horas.</p>
+  <div class="next">
+    <small>Hoje · 18h00</small>
+    <h2 class="serif">Pilates Reformer</h2>
+    <p>Sala 2 · 50 minutos</p>
+    <div class="row"><span class="inst"><i>L</i>com Lia Martins</span><span class="pbtn">Fazer check-in</span></div>
+  </div>
+  <div class="sec"><h3 class="serif">Seu plano</h3><a href="#">Detalhes</a></div>
+  <div class="plan"><div class="t">Mensal · 12 aulas<span>6 restantes</span></div><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+  <div class="sec"><h3 class="serif">Agendar</h3><a href="#">Ver todas</a></div>
+  <div class="cats">
+    <div class="cat c1"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M5 21l4-8 3 3 3-3 4 8M12 7v6"/></svg></span><div><b>Pilates</b><br><span>14 horários livres</span></div></div>
+    <div class="cat c2"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M4 12h16M12 7v14M8 21l4-6 4 6"/></svg></span><div><b>Yoga</b><br><span>9 horários livres</span></div></div>
+  </div>
+</section>
+
+<section class="s" id="agenda">
+  <div class="hd"><span class="bell nd" style="border:0"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></span><b>Novembro</b><span class="bell nd" style="border:0"><svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg></span></div>
+  <div class="week">
+    <div>Seg<b>10</b></div><div>Ter<b>11</b></div><div>Qua<b>12</b></div><div class="on">Qui<b>13</b></div><div>Sex<b>14</b></div><div>Sáb<b>15</b></div><div>Dom<b>16</b></div>
+  </div>
+  <div class="filters"><span class="on">Todas</span><span>Pilates</span><span>Yoga</span><span>Funcional</span></div>
+  <div class="cls"><div class="h">07h<small>50 min</small></div><div><b>Pilates Solo</b><span>com Rafael · Sala 1</span></div><em class="full">Lotada</em></div>
+  <div class="cls sel"><div class="h">09h<small>50 min</small></div><div><b>Pilates Reformer</b><span>com Lia · Sala 2</span></div><em>2 vagas</em></div>
+  <div class="cls"><div class="h">12h<small>60 min</small></div><div><b>Yoga Flow</b><span>com Teresa · Sala 3</span></div><em>5 vagas</em></div>
+  <div class="cls"><div class="h">18h<small>50 min</small></div><div><b>Pilates Reformer</b><span>com Lia · Sala 2</span></div><em>1 vaga</em></div>
+  <div class="cta">Reservar quinta, 9h</div>
+</section>
+
+<section class="s" id="ok">
+  <div class="okc">
+    <div class="check"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h1 class="serif">Aula reservada!</h1>
+    <p class="sub" style="margin:0">A gente te lembra antes de começar.</p>
+    <div class="tk">
+      <div class="r"><span>Aula</span><b>Pilates Reformer</b></div>
+      <div class="r"><span>Quando</span><b>Quinta, 13 · 9h00</b></div>
+      <div class="r"><span>Com</span><b>Lia Martins · Sala 2</b></div>
+      <div class="r"><span>Plano</span><b>5 aulas restantes</b></div>
+    </div>
+    <div class="opt"><div><b>Lembrete 2 horas antes</b><span>Notificação no celular</span></div><span class="tg"></span></div>
+    <div class="ghost">Adicionar ao calendário</div>
+  </div>
+</section>
+
+<nav class="tab">
+  <a class="on" href="#"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H3z"/></svg>Início</a>
+  <a href="#"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Agenda</a>
+  <a href="#"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 11h18"/></svg>Plano</a>
+  <a href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Perfil</a>
+</nav>
+<script>
+const s=new URLSearchParams(location.search).get('s')||(location.hash||'#home').slice(1);document.body.dataset.s=s;
+document.querySelectorAll('.tab a').forEach((a,i)=>a.classList.toggle('on',(s==='home'&&i===0)||(s!=='home'&&i===1)));
+</script>
+</body>
+</html>

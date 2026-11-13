@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+# originais grandes ficam fora do repositório; as versões usadas pelo site estão em src/assets
+imagens/
+demos/_shots/*.png
+*.log
+.DS_Store
+Thumbs.db

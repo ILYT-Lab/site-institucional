@@ -1,0 +1,16 @@
+---
+interface Props { on?: boolean }
+const { on = false } = Astro.props;
+---
+<div class:list={["gshot has-scene", { "is-on": on }]} aria-hidden="true">
+  <div class="scene"><div class="steps">
+    <div class="step"><span class="sn">1</span><span class="sl">Procuram no Google</span><i class="sline"></i>
+      <div class="sc"><div class="q"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>fisioterapia em moema</div>
+        <div><b>Clínica Movimento</b><small>★ 4,9 · 212 avaliações · clinicamovimento.com.br</small></div></div></div>
+    <div class="step"><span class="sn">2</span><span class="sl">Entram no seu site</span><i class="sline"></i>
+      <div class="sc"><span class="url">clinicamovimento.com.br</span><b>Fisioterapia que te devolve o movimento.</b><span class="b">Agendar pelo WhatsApp</span></div></div>
+    <div class="step"><span class="sn">3</span><span class="sl">Chamam no WhatsApp</span>
+      <div class="sc chat"><div class="msg">Oi! Vi o site de vocês. Quero agendar uma avaliação.<small>23:14</small></div><div class="msg out late">Olá! Tenho horário amanhã às 9h ou às 14h. Qual você prefere?<small>23:14 · respondido pela IA</small></div></div>
+      <div class="won">✓ Contato atendido fora do horário comercial</div></div>
+  </div></div>
+</div>
