@@ -1,6 +1,6 @@
 # Site ILYT
 
-Site institucional da ILYT (software sob medida para PMEs, Belo Horizonte/MG). Astro estático + GSAP/Lenis, servido por Nginx em Docker no Coolify.
+Site institucional da ILYT (software sob medida para PMEs, Belo Horizonte/MG). Astro 7 estático (Node 22.23.4+) + GSAP/Lenis, servido por Nginx em Docker no Coolify.
 
 ## Comandos
 - `npm run dev`: servidor de desenvolvimento (http://localhost:4321)
@@ -34,7 +34,6 @@ Site institucional da ILYT (software sob medida para PMEs, Belo Horizonte/MG). A
 - O site não tem formulário: contato é só WhatsApp.
 
 ## Pendências antes de publicar
-- Atualizar para Astro 7.3.2+ (corrige falhas de segurança) — exige Node 22.23.4+ na máquina local.
 - Fotos reais dos demos Movimento, Verbo e Clique (`demos/imagens.md`) e refazer os mockups (`demos/_shots`).
-- E-mail contato@ilyt.com.br funcionando; IDs de GTM/Umami; redes sociais; CNPJ; logo oficial.
+- E-mail contato@ilyt.com.br funcionando; IDs de GTM/Umami; redes sociais; CNPJ.
 - Revisão jurídica da política de privacidade.
