@@ -52,7 +52,7 @@ export function initMotion(goals: Goals) {
   });
   gsap.from('.tale-end > *', { opacity: 0, y: 24, duration: 0.9, stagger: 0.15, ease: 'expo.out', scrollTrigger: { trigger: '.tale-end', start: 'top 80%', once: true } });
 
-  // como a gente trabalha: a linha âmbar desce com a leitura e os números acendem
+  // como trabalhamos: a linha âmbar desce com a leitura e os números acendem
   gsap.fromTo('#workFill', { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: '#work', start: 'top 70%', end: 'bottom 60%', scrub: true } });
   document.querySelectorAll<HTMLElement>('.wrow').forEach((r) =>
     ScrollTrigger.create({

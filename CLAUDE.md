@@ -29,7 +29,7 @@ Site institucional da ILYT (software sob medida para PMEs, Belo Horizonte/MG). A
 - Homologação: build com `PUBLIC_NOINDEX=true` (noindex + robots bloqueado).
 
 ## Texto (voz da marca)
-- "a gente" (não "nós"), "você" (não "te"). Sem jargão (ROI, SLA, B2B), sem metáfora, sem prometer vendas.
+- Primeira pessoa do plural pelo verbo ("entendemos", "conectamos"), nunca "a gente". "Você" (não "te"). Chamada de contato: "Nos conte…" / "Fale com a ILYT". Sem jargão (ROI, SLA, B2B), sem metáfora, sem prometer vendas.
 - Exceções aprovadas: "Respondemos em até 24 horas" (hero) e o FAQ de preço/pagamento ficam como estão.
 - O site não tem formulário: contato é só WhatsApp.
 
