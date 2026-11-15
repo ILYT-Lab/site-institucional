@@ -23,7 +23,7 @@ const grids: { id: string; tab: string; label: string; items: Projeto[] }[] = [
         {g.items.map((p) => (
           <article class="pcard" data-title={p.nome} data-type={p.tipo} data-desc={p.descricao} data-url={p.url}>
             <span class="ph">
-              <Picture src={p.imagem} formats={['avif', 'webp']} fallbackFormat="jpg" widths={[480, 800, 1200, 1600]} sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 400px" alt={`${p.nome}: ${p.tipo.toLowerCase()}, telas no computador e no celular`} loading="lazy" quality={70} />
+              <Picture src={p.imagem} formats={['avif', 'webp']} fallbackFormat="jpg" widths={[480, 800, 1200, 1600]} sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 400px" alt={`${p.nome}: ${/^[A-Z][a-z]/.test(p.tipo) ? p.tipo.charAt(0).toLowerCase() + p.tipo.slice(1) : p.tipo}, telas no computador e no celular`} loading="lazy" quality={70} />
             </span>
             <span class="pmeta">{p.tipo}</span>
             <h3><button class="pcard-btn" type="button" aria-haspopup="dialog">{p.nome}</button></h3>
