@@ -26,7 +26,7 @@ Site institucional da ILYT (software sob medida para PMEs, Belo Horizonte/MG). A
 - Um H1 por página. Seções com H2; itens com H3.
 - Todo botão "Pedir diagnóstico" usa `WhatsAppButton` com `from` (vira o evento `clique_whatsapp` com `cta_local`).
 - Medição: Umami sem cookies; GTM só carrega após "Aceitar" no aviso de cookies (aparece sozinho quando `gtmId` é preenchido).
-- Homologação: build com `PUBLIC_NOINDEX=true` (noindex + robots bloqueado).
+- Publicação: uma aplicação só no Coolify, domínios `ilyt.com.br` e `www.ilyt.com.br` (o nginx redireciona www para sem www). Até o lançamento: senha (Basic Auth) e variável de build `PUBLIC_NOINDEX=true` (noindex + robots bloqueado). No lançamento: tirar a senha, `PUBLIC_NOINDEX=false`, novo deploy, enviar o sitemap no Search Console.
 
 ## Texto (voz da marca)
 - Primeira pessoa do plural pelo verbo ("entendemos", "conectamos"), nunca "a gente". "Você" (não "te"). Chamada de contato: "Nos conte…" / "Fale com a ILYT". Sem jargão (ROI, SLA, B2B), sem metáfora, sem prometer vendas.

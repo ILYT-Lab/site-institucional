@@ -14,5 +14,5 @@ Regras do projeto: `CLAUDE.md`.
 
 ## Publicação (Coolify)
 - Tipo: Dockerfile, porta 80.
-- Homologação: variável de build `PUBLIC_NOINDEX=true` (não indexa no Google) e senha no Coolify.
+- Antes do lançamento: variável de build `PUBLIC_NOINDEX=true` (não indexa no Google) e senha no Coolify. No lançamento, `false` e sem senha.
 - Produção: `PUBLIC_NOINDEX=false`.

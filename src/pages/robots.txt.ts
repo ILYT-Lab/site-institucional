@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 
-// Na homologação (PUBLIC_NOINDEX=true) o Google não indexa nada.
+// Antes do lançamento (PUBLIC_NOINDEX=true) o Google não indexa nada.
 export const GET: APIRoute = ({ site }) => {
   const block = import.meta.env.PUBLIC_NOINDEX === 'true';
   const body = block
