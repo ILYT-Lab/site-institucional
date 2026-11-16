@@ -34,7 +34,7 @@ const base = Astro.props.home ? '' : '/';
 
 <style is:global>
   .nav-shell { position: fixed; left: 0; right: 0; top: env(safe-area-inset-top, 0px); z-index: 50; padding-top: 16px; }
-  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 8px 8px 18px; border-radius: var(--r-piece); border: 1px solid rgba(255, 255, 255, .08); background: rgba(10, 10, 11, .55); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 8px 8px 18px; border-radius: var(--r-piece); border: 1px solid rgba(255, 255, 255, .08); background: rgba(10, 10, 11, .55); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
   .brand { flex: none; display: block; color: #fff; }
   .brand svg { display: block; height: 28px; width: auto; }
   .nav-links { display: flex; gap: 2px; }
@@ -54,7 +54,7 @@ const base = Astro.props.home ? '' : '/';
      Os links ocupam o espaço livre (e rolam se precisar); o botão fica na última linha. */
   .menu-panel { position: fixed; z-index: 49; top: var(--menu-top, 90px); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); left: var(--menu-left, 16px); right: var(--menu-right, 16px);
     display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 16px; padding: 8px 16px 16px;
-    border-radius: var(--r-piece); border: 1px solid rgba(255, 255, 255, .08); background: rgba(10, 10, 11, .94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    border-radius: var(--r-piece); border: 1px solid rgba(255, 255, 255, .08); background: rgba(10, 10, 11, .94); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
   .menu-panel[hidden] { display: none; }
   .menu-links { overflow-y: auto; overscroll-behavior: contain; }
   .menu-links a { display: flex; align-items: baseline; gap: 14px; padding: 16px 6px; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--ink); font: 500 18px/1.2 var(--font-display); letter-spacing: -.02em; }

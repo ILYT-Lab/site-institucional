@@ -22,6 +22,7 @@ Site institucional da ILYT (software sob medida para PMEs, Belo Horizonte/MG). A
 - **Desempenho é promessa do site (90+ no PageSpeed).** Medir com Lighthouse no celular depois de qualquer mudança visual ou de script. Estado atual: celular 97, desktop 100, demais categorias 100.
 - Nenhum script pode ler medidas da página (scrollY, offset*, getBoundingClientRect, getComputedStyle) antes do primeiro desenho. Inicializações ficam no `boot()` (requestIdleCallback) de `main.ts`.
 - A animação de entrada da hero é CSS; não trocar por GSAP (atrasaria o LCP).
+- Validar visual na versão de produção (`npm run build` ou Docker), não só no `npm run dev`: o dev não compacta o CSS. Os navegadores atendidos ficam em `vite.build.cssTarget` (`astro.config.mjs`); sem isso o compactador apaga prefixos como `-webkit-backdrop-filter`.
 - Imagens: sempre via `astro:assets` (`<Image>`, `<Picture>` ou `ArtPicture`), nunca `<img>` solto com arquivo original.
 - Um H1 por página. Seções com H2; itens com H3.
 - Todo botão "Pedir diagnóstico" usa `WhatsAppButton` com `from` (vira o evento `clique_whatsapp` com `cta_local`).
