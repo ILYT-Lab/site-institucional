@@ -1,5 +1,5 @@
-// Especialidades. Desktop: um palco troca a cena e avança a cada 6s enquanto está na tela
-// (pausa com o mouse em cima e para de vez quando o visitante clica). Até 1000px: acordeão, cada cena no seu item.
+// Especialidades. Desktop: um palco mostra a cena do item escolhido. Até 1000px: acordeão, cada cena no seu item.
+// Sem troca automática: o visitante escolhe o item e a cena roda inteira, no tempo dele.
 import { getLenis } from './nav';
 
 export type Goals = { useGsap: (gsap: any) => void } | null;
@@ -12,7 +12,6 @@ export function initGoals(reduce: boolean): Goals {
   const stage = goals.querySelector<HTMLElement>('.goal-stage')!;
   const wide = matchMedia('(min-width: 1001px)');
   let cur = 0;
-  let userTook = false;
   let seen = false;
   let pending = false;
   let gsap: any = null;
@@ -54,13 +53,10 @@ export function initGoals(reduce: boolean): Goals {
       const home = wide.matches ? stage : items[i].querySelector('.goal-in')!;
       if (s.parentElement !== home) home.appendChild(s);
     });
-    goals.classList.toggle('auto', wide.matches && !reduce && !userTook);
   };
 
   items.forEach((it, i) =>
     it.querySelector('.goal-btn')!.addEventListener('click', () => {
-      userTook = true;
-      goals.classList.remove('auto');
       if (i === cur) return;
       show(i);
       // acordeão: o item de cima fecha e a página pula; traz o item aberto de volta para baixo do menu
@@ -73,22 +69,18 @@ export function initGoals(reduce: boolean): Goals {
         });
     }),
   );
-  goals.addEventListener('animationend', (e) => {
-    if (e.animationName === 'gfill') show((cur + 1) % items.length);
-  });
-  goals.addEventListener('mouseenter', () => goals.classList.add('paused'));
-  goals.addEventListener('mouseleave', () => goals.classList.remove('paused'));
-  goals.classList.add('off');
-  new IntersectionObserver(
+  // a primeira cena roda quando a seção aparece na tela
+  const io = new IntersectionObserver(
     ([e]) => {
-      goals.classList.toggle('off', !e.isIntersecting);
       if (e.isIntersecting && !seen) {
         seen = true;
         build(shots[cur]);
+        io.disconnect();
       }
     },
     { threshold: 0.35 },
-  ).observe(goals);
+  );
+  io.observe(goals);
   wide.addEventListener('change', place);
   place();
 

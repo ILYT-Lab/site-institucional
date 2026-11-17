@@ -64,9 +64,6 @@ const goals = [
   .gbar { position: absolute; left: 0; right: 0; top: -1px; height: 2px; pointer-events: none; }
   .gbar i { display: block; height: 100%; background: var(--amber); transform-origin: 0 50%; transform: scaleX(0); }
   .goal.is-on .gbar i { transform: scaleX(1); }
-  .goals.auto .goal.is-on .gbar i { animation: gfill 6s linear forwards; }
-  .goals.auto.paused .gbar i, .goals.auto.off .gbar i { animation-play-state: paused; }
-  @keyframes gfill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
   .goal-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s cubic-bezier(.16, 1, .3, 1); }
   .goal.is-on .goal-body { grid-template-rows: 1fr; }
   .goal-in { overflow: hidden; display: grid; gap: 18px; padding-left: 38px; }
