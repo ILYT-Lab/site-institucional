@@ -8,7 +8,7 @@ import unboundedWoff2 from '@fontsource-variable/unbounded/files/unbounded-latin
 import onestWoff2 from '@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url';
 import Header from '../components/ui/Header.astro';
 import Footer from '../components/ui/Footer.astro';
-import Fab from '../components/ui/Fab.astro';
+import Lyo from '../components/ui/Lyo.astro';
 import Analytics from '../components/ui/Analytics.astro';
 import { site } from '../config/site';
 
@@ -73,7 +73,7 @@ const blockIndex = noindex || import.meta.env.PUBLIC_NOINDEX === 'true';
       <slot />
     </main>
     <Footer home={home} />
-    <Fab />
+    <Lyo />
     <script>
       import '../scripts/main';
     </script>

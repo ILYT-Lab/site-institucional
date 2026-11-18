@@ -1,0 +1,141 @@
+---
+// Lyo: assistente da ILYT. Mascote flutuante que abre o chat (por enquanto só a parte visual; a IA entra depois).
+// O corpo e os olhos são imagens separadas para os olhos piscarem e seguirem o cursor.
+import { Image } from 'astro:assets';
+import corpo from '../../assets/lyo/lyo-corpo.png';
+import olho from '../../assets/lyo/lyo-olho.png';
+import inteiro from '../../assets/lyo/lyo.png';
+import WhatsAppIcon from './WhatsAppIcon.astro';
+import { whatsappUrl } from '../../config/site';
+---
+<div class="lyo off" id="lyo">
+  <p class="lyo-bubble" id="lyo-bubble" aria-hidden="true">Posso ajudar você?</p>
+  <button class="lyo-btn" id="lyo-btn" type="button" aria-label="Conversar com o Lyo, assistente da ILYT" aria-expanded="false" aria-controls="lyo-chat">
+    <span class="lyo-shadow"></span>
+    <span class="lyo-body">
+      <Image class="lyo-base" src={corpo} alt="" width={96} densities={[1, 2]} format="webp" loading="lazy" />
+      <span class="lyo-eye l"><Image src={olho} alt="" width={10} densities={[1, 2, 3]} format="webp" loading="lazy" /></span>
+      <span class="lyo-eye r"><Image src={olho} alt="" width={10} densities={[1, 2, 3]} format="webp" loading="lazy" /></span>
+    </span>
+  </button>
+</div>
+
+<section class="lyo-chat" id="lyo-chat" role="dialog" aria-labelledby="lyo-title" hidden>
+  <header class="lyo-head">
+    <Image class="lyo-avatar" src={inteiro} alt="" width={36} densities={[1, 2]} format="webp" loading="lazy" />
+    <div class="lyo-who">
+      <strong id="lyo-title">Lyo</strong>
+      <span><i></i>Assistente da ILYT</span>
+    </div>
+    <a class="lyo-icon" href={whatsappUrl()} target="_blank" rel="noopener" data-cta="chat-lyo" aria-label="Falar com a ILYT no WhatsApp" title="Falar com a ILYT no WhatsApp"><WhatsAppIcon /></a>
+    <button class="lyo-icon" id="lyo-big" type="button" aria-label="Ampliar o chat" aria-pressed="false" title="Ampliar">
+      <svg class="i-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7" /></svg>
+      <svg class="i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10h-6V4M14 10l7-7M4 14h6v6M10 14l-7 7" /></svg>
+    </button>
+    <button class="lyo-icon" id="lyo-close" type="button" aria-label="Fechar o chat" title="Fechar">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+  </header>
+
+  <div class="lyo-msgs" id="lyo-msgs" data-lenis-prevent aria-live="polite">
+    <p class="lyo-msg bot">Oi! Sou o Lyo, assistente da ILYT. Nos conte o que está travando na sua empresa que eu ajudo você a encontrar o caminho.</p>
+    <div class="lyo-quick" id="lyo-quick">
+      <button type="button">Quero um site ou landing page</button>
+      <button type="button">Preciso de um sistema sob medida</button>
+      <button type="button">Quanto custa e qual o prazo?</button>
+    </div>
+  </div>
+
+  <form class="lyo-form" id="lyo-form">
+    <label class="sr-only" for="lyo-input">Sua mensagem</label>
+    <textarea id="lyo-input" rows="1" placeholder="Escreva sua mensagem" autocomplete="off"></textarea>
+    <button type="submit" aria-label="Enviar">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </button>
+  </form>
+  <p class="lyo-note">Assistente com inteligência artificial. Quando fizer sentido, levamos a conversa para o WhatsApp.</p>
+</section>
+
+<style is:global>
+  /* ---------- mascote ---------- */
+  .lyo { position: fixed; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 40; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; transition: opacity .25s, transform .32s cubic-bezier(.2, .9, .2, 1.15); }
+  .lyo.off, .lyo.open { opacity: 0; transform: translateY(12px) scale(.92); pointer-events: none; }
+
+  .lyo-bubble { margin: 0; padding: 8px 12px; background: var(--surface-raised); color: var(--ink); border: 1px solid var(--line); border-radius: 14px 14px 4px 14px; box-shadow: var(--shadow-piece); font-size: var(--fs-small); font-weight: 500; line-height: 1.3; white-space: nowrap; opacity: 0; transform: translateY(6px) scale(.96); transform-origin: bottom right; transition: opacity .3s, transform .3s; pointer-events: none; }
+  .lyo-bubble.show { opacity: 1; transform: none; }
+
+  .lyo-btn { position: relative; width: 72px; aspect-ratio: 480 / 526; padding: 0; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .lyo-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 6px; border-radius: 16px; }
+  /* luz âmbar por trás: o Lyo é preto e o site é escuro */
+  .lyo-btn::before { content: ""; position: absolute; inset: 8% 4% 4%; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 176, 32, .22), transparent); }
+  .lyo-shadow { position: absolute; left: 18%; right: 18%; bottom: -5px; height: 10px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0, 0, 0, .7), transparent); }
+  .lyo-body { position: absolute; inset: 0; transform-origin: 50% 100%; }
+  .lyo-body img { position: absolute; display: block; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+  .lyo-base { inset: 0; width: 100%; height: 100%; }
+  /* olhos: posição em % do recorte (scripts de recorte em brand/lyo) */
+  .lyo-eye { position: absolute; top: 32.58%; width: 7.97%; height: 14.29%; transition: translate .25s ease-out; }
+  .lyo-eye.l { left: 39.03%; }
+  .lyo-eye.r { left: 53.92%; }
+  .lyo-eye img { width: 100%; height: 100%; transform-origin: 50% 55%; transition: transform .07s ease-in; }
+  .lyo-btn.blink .lyo-eye img { transform: scaleY(.1); }
+  .lyo-btn.moving .lyo-body { animation: lyo-sway 3s ease-in-out var(--loops, 1); }
+  .lyo-btn.moving .lyo-shadow { animation: lyo-shadow 3s ease-in-out var(--loops, 1); }
+  .lyo-btn:hover .lyo-body { animation: lyo-hop .6s ease-in-out; }
+  @keyframes lyo-sway { 0%, 50%, 100% { transform: rotate(0) translateY(0); } 25% { transform: rotate(-4deg) translateY(-2px); } 75% { transform: rotate(4deg) translateY(-2px); } }
+  @keyframes lyo-shadow { 0%, 50%, 100% { transform: scaleX(1); } 25%, 75% { transform: scaleX(.88); opacity: .8; } }
+  @keyframes lyo-hop { 0%, 100% { transform: translateY(0) scale(1); } 35% { transform: translateY(-10px) scale(1.04, .97); } 70% { transform: translateY(0) scale(1.05, .95); } }
+
+  /* ---------- chat ---------- */
+  .lyo-chat { position: fixed; z-index: 60; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 380px; height: min(580px, calc(100dvh - 32px)); display: flex; flex-direction: column; overflow: hidden; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: var(--r-piece); box-shadow: var(--shadow-piece); opacity: 0; transform: translateY(16px) scale(.97); transform-origin: bottom right; transition: opacity .25s, transform .25s, width .3s cubic-bezier(.2, .8, .2, 1), height .3s cubic-bezier(.2, .8, .2, 1); }
+  .lyo-chat[hidden] { display: none; }
+  .lyo-chat.open { opacity: 1; transform: none; }
+  .lyo-chat.big { width: min(760px, calc(100vw - 32px)); height: calc(100dvh - 32px); }
+
+  .lyo-head { display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 16px; border-bottom: 1px solid var(--line); background: var(--surface-raised); }
+  .lyo-avatar { width: 36px; height: auto; flex: none; }
+  .lyo-who { display: grid; line-height: 1.25; margin-right: auto; }
+  .lyo-who strong { font: 600 16px / 1.2 var(--font-display); }
+  .lyo-who span { display: flex; align-items: center; gap: 6px; color: var(--ink-muted); font-size: 13px; }
+  .lyo-who i { width: 7px; height: 7px; border-radius: 50%; background: var(--success); }
+  .lyo-icon { display: grid; place-items: center; width: 36px; height: 36px; flex: none; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--ink-muted); cursor: pointer; transition: background .2s, color .2s; }
+  .lyo-icon:hover { background: var(--surface); color: var(--ink); }
+  .lyo-icon:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+  .lyo-icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .lyo-icon[data-cta] svg { fill: currentColor; stroke: none; }
+  #lyo-big .i-close, #lyo-big[aria-pressed='true'] .i-open { display: none; }
+  #lyo-big[aria-pressed='true'] .i-close { display: block; }
+
+  .lyo-msgs { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 18px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .lyo-msg { margin: 0; max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: 15px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .lyo-msg.bot { align-self: flex-start; background: var(--surface-raised); border-bottom-left-radius: 4px; }
+  .lyo-msg.me { align-self: flex-end; background: var(--amber); color: var(--on-amber); border-bottom-right-radius: 4px; }
+  .lyo-msg.typing { display: flex; gap: 4px; padding: 14px; }
+  .lyo-msg.typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-muted); animation: lyo-dot 1s infinite ease-in-out; }
+  .lyo-msg.typing i:nth-child(2) { animation-delay: .15s; }
+  .lyo-msg.typing i:nth-child(3) { animation-delay: .3s; }
+  @keyframes lyo-dot { 0%, 60%, 100% { opacity: .3; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
+  .lyo-wa { align-self: flex-start; }
+  .lyo-quick { display: flex; flex-wrap: wrap; gap: 8px; }
+  .lyo-quick button { padding: 8px 12px; border: 1px solid var(--line-strong); border-radius: 99px; background: none; color: var(--ink); font: 500 14px / 1.3 var(--font-sans); cursor: pointer; transition: border-color .2s, color .2s; }
+  .lyo-quick button:hover { border-color: var(--amber); color: var(--amber); }
+  .lyo-quick button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .lyo-form { display: flex; align-items: flex-end; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+  .lyo-form textarea { flex: 1; min-height: 44px; max-height: 140px; padding: 11px 14px; resize: none; overflow-y: hidden; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); color: var(--ink); font: 400 16px / 1.4 var(--font-sans); }
+  .lyo-form textarea:focus { outline: none; border-color: var(--amber); }
+  .lyo-form button { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border: 0; border-radius: 50%; background: var(--amber); color: var(--on-amber); cursor: pointer; }
+  .lyo-form button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .lyo-form svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .lyo-note { margin: 0; padding: 0 16px 10px; color: var(--ink-muted); font-size: var(--fs-label); line-height: 1.4; text-align: center; }
+
+  /* celular: o chat ocupa a parte de baixo da tela; ampliado, a tela toda */
+  @media (max-width: 600px) {
+    .lyo-chat { right: 0; bottom: 0; width: 100%; height: 85dvh; border-radius: var(--r-piece) var(--r-piece) 0 0; border-bottom: 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
+    .lyo-chat.big { width: 100%; height: 100dvh; border-radius: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lyo-btn .lyo-body, .lyo-btn .lyo-shadow, .lyo-btn:hover .lyo-body { animation: none !important; }
+    .lyo-chat, .lyo-eye, .lyo-eye img { transition: none; }
+  }
+</style>

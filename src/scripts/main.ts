@@ -6,6 +6,7 @@ import { initProjects } from './projects';
 import { initGoals, type Goals } from './goals';
 import { initTracking } from './tracking';
 import { initHeroCursor } from './hero';
+import { initLyo } from './lyo';
 
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -19,6 +20,7 @@ const boot = () => {
   initNav();
   initProjects();
   initTracking();
+  initLyo(reduce);
   goals = initGoals(reduce);
   // o cursor mede a posição da palavra com o layout já pronto
   if (!reduce) initHeroCursor();

@@ -1,16 +1,9 @@
-// Menu do celular, botão flutuante do WhatsApp e rolagem suave para as âncoras.
+// Menu do celular e rolagem suave para as âncoras.
 export function getLenis(): any {
   return (window as any).lenis;
 }
 
 export function initNav() {
-  const fab = document.getElementById('fab');
-  const hero = document.getElementById('hero');
-  if (fab) {
-    if (hero) new IntersectionObserver(([e]) => fab.classList.toggle('off', e.isIntersecting), { threshold: 0.2 }).observe(hero);
-    else fab.classList.remove('off');
-  }
-
   const btn = document.getElementById('menuBtn');
   const menu = document.getElementById('menuPanel');
   const bar = document.querySelector<HTMLElement>('.nav');
